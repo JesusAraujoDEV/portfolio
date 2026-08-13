@@ -5,7 +5,6 @@ import QuickFacts from "@/components/QuickFacts";
 import NowPlaying from "@/components/NowPlaying";
 import GamesSpotlight from "@/components/GamesSpotlight";
 import FavoriteFilms from "@/components/FavoriteFilms";
-import Scrapbook from "@/components/Scrapbook";
 import { hasPublicAsset } from "@/lib/assets";
 
 export default function About() {
@@ -52,7 +51,6 @@ export default function About() {
         <NowPlaying />
         <GamesSpotlight />
         <FavoriteFilms />
-        <Scrapbook />
       </div>
     </section>
   );

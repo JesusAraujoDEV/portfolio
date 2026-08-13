@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import PaperCycler from "@/components/PaperCycler";
 
 const container = {
   hidden: {},
@@ -20,11 +21,14 @@ export default function Hero() {
     >
       <div className="mx-auto grid w-full max-w-6xl gap-12 md:grid-cols-[1fr_auto] md:items-end">
         <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl">
-          <p className="mb-4 overflow-hidden">
-            <motion.span variants={item} className="block font-mono text-xs uppercase tracking-[0.3em] text-muted">
-              Valencia, Venezuela
-            </motion.span>
-          </p>
+          <div className="mb-4 flex flex-wrap items-center gap-4">
+            <p className="overflow-hidden">
+              <motion.span variants={item} className="block font-mono text-xs uppercase tracking-[0.3em] text-muted">
+                Valencia, Venezuela
+              </motion.span>
+            </p>
+            <PaperCycler />
+          </div>
           <h1 className="text-[15vw] font-medium leading-[0.9] tracking-tight md:text-[6.5vw]">
             <span className="block overflow-hidden">
               <motion.span variants={item} className="block">

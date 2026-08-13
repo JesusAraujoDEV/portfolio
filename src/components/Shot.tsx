@@ -18,6 +18,7 @@ export default function Shot({
       type="button"
       onClick={() => open(src, alt)}
       aria-label={`Ver ${alt} en grande`}
+      data-cursor="VER"
       className={`group block overflow-hidden border border-foreground/15 ${className}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

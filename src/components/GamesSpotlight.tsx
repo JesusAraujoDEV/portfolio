@@ -1,12 +1,13 @@
 import PaperPhoto from "@/components/PaperPhoto";
+import Reveal from "@/components/Reveal";
 
 export default function GamesSpotlight() {
   return (
-    <div className="mt-24 border-t border-foreground/10 pt-16">
+    <Reveal className="mt-24 border-t border-foreground/10 pt-16">
       <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
         Cuando no estoy programando
       </span>
-      <h3 className="mt-3 max-w-lg text-3xl leading-tight md:text-4xl">
+      <h3 className="mt-3 max-w-2xl text-4xl leading-[0.95] tracking-tight md:text-6xl">
         Resident Evil, de punta a punta. Leon y Ethan cargando el peso.
       </h3>
       <p className="mt-3 max-w-md text-foreground/80">
@@ -22,6 +23,6 @@ export default function GamesSpotlight() {
           <PaperPhoto src="/images/ethab-winthers.png" alt="Ethan Winters" rotate={3} />
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }

@@ -1,4 +1,5 @@
 import Shot from "@/components/Shot";
+import Reveal from "@/components/Reveal";
 
 const films = [
   { src: "/images/about-time.jpg", alt: "About Time" },
@@ -9,11 +10,11 @@ const films = [
 
 export default function FavoriteFilms() {
   return (
-    <div className="mt-24 border-t border-foreground/10 pt-16">
+    <Reveal className="mt-24 border-t border-foreground/10 pt-16">
       <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
         Top 4 en Letterboxd
       </span>
-      <h3 className="mt-3 max-w-lg text-3xl leading-tight md:text-4xl">
+      <h3 className="mt-3 max-w-2xl text-4xl leading-[0.95] tracking-tight md:text-6xl">
         Las que vuelvo a ver aunque ya me sepa los diálogos.
       </h3>
       <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -29,6 +30,6 @@ export default function FavoriteFilms() {
       >
         Ver perfil completo →
       </a>
-    </div>
+    </Reveal>
   );
 }

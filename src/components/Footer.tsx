@@ -1,3 +1,5 @@
+import Reveal from "@/components/Reveal";
+
 const links = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/jesusaraujodev/" },
   { label: "Letterboxd", href: "https://letterboxd.com/JesuCritico/" },
@@ -12,16 +14,17 @@ const links = [
 export default function Footer() {
   return (
     <footer id="contact" className="border-t border-foreground/10 px-6 py-16 md:px-12">
-      <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+      <Reveal className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
             Contacto
           </span>
-          <h2 className="mt-4 max-w-md text-3xl leading-tight md:text-4xl">
+          <h2 className="mt-4 max-w-md text-4xl leading-[0.95] tracking-tight md:text-5xl">
             ¿Tienes algo en mente? Escríbeme.
           </h2>
           <a
             href="mailto:jesusaraujodev@gmail.com"
+            data-cursor="ESCRIBIR"
             className="mt-4 inline-block text-accent underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
           >
             jesusaraujodev@gmail.com
@@ -41,7 +44,7 @@ export default function Footer() {
             </a>
           ))}
         </nav>
-      </div>
+      </Reveal>
 
       <p className="mt-16 font-mono text-[11px] text-muted">
         © {new Date().getFullYear()} Jesús Araujo — Valencia, Venezuela.

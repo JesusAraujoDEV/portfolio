@@ -1,4 +1,5 @@
 import PaperPhoto from "@/components/PaperPhoto";
+import Reveal from "@/components/Reveal";
 import { hasPublicAsset } from "@/lib/assets";
 
 const scrapbook = [
@@ -12,7 +13,7 @@ export default function Scrapbook() {
   if (photos.length === 0) return null;
 
   return (
-    <div className="mt-24 border-t border-foreground/10 pt-16">
+    <Reveal className="mt-24 border-t border-foreground/10 pt-16">
       <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
         Fuera de cámara
       </span>
@@ -26,6 +27,6 @@ export default function Scrapbook() {
           </div>
         ))}
       </div>
-    </div>
+    </Reveal>
   );
 }

@@ -1,5 +1,6 @@
 import AssetImage from "@/components/AssetImage";
 import PaperPhoto from "@/components/PaperPhoto";
+import Reveal from "@/components/Reveal";
 import QuickFacts from "@/components/QuickFacts";
 import NowPlaying from "@/components/NowPlaying";
 import GamesSpotlight from "@/components/GamesSpotlight";
@@ -27,11 +28,11 @@ export default function About() {
           )}
         </div>
 
-        <div>
+        <Reveal>
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
             Sobre mí
           </span>
-          <h2 className="mt-4 max-w-xl text-3xl leading-tight md:text-5xl">
+          <h2 className="mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight md:text-6xl">
             21 años, ingeniero recién graduado, todavía sin dormir bien.
           </h2>
           <p className="mt-6 max-w-xl text-foreground/80">
@@ -43,7 +44,7 @@ export default function About() {
             corriendo. Cuando cierro la laptop, casi siempre hay una serie,
             una peli o un control en la mano.
           </p>
-        </div>
+        </Reveal>
       </div>
 
       <QuickFacts />

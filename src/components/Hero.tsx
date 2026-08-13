@@ -23,7 +23,7 @@ export default function Hero() {
       id="top"
       className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 md:px-12"
     >
-      <div className="pointer-events-none absolute inset-0 -z-0 opacity-70">
+      <div className="pointer-events-none absolute inset-0 -z-0 opacity-90">
         <HeroScene />
       </div>
 

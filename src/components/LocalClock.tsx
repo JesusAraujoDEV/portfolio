@@ -25,7 +25,7 @@ export default function LocalClock() {
   }, []);
 
   return (
-    <span className="hidden font-mono text-xs tracking-wider text-white/70 sm:inline">
+    <span className="hidden font-mono text-xs tracking-wider text-foreground/70 sm:inline">
       {time ?? "--:--:--"} VET · Valencia, VE
     </span>
   );

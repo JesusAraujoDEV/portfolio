@@ -1,48 +1,16 @@
 import AssetImage from "@/components/AssetImage";
-
-const interests = [
-  {
-    emoji: "🐜",
-    label: "Hunter x Hunter",
-    detail: "Mi serie favorita, sin discusión.",
-  },
-  {
-    emoji: "🏴‍☠️",
-    label: "One Piece",
-    detail: "El otro shonen que no falla nunca.",
-  },
-  {
-    emoji: "🎤",
-    label: "Olivia Rodrigo",
-    detail: "Casi siempre sonando de fondo.",
-  },
-  {
-    emoji: "⚾",
-    label: "Navegantes del Magallanes",
-    detail: "Beisbol venezolano, sin excusas.",
-  },
-  {
-    emoji: "🧟",
-    label: "Resident Evil",
-    detail: "Leon Kennedy y Ethan Winters, mis favoritos.",
-  },
-  {
-    emoji: "🇻🇪",
-    label: "Valencia, Venezuela",
-    detail: "Donde nací y sigo construyendo.",
-  },
-];
+import InterestsGrid from "@/components/InterestsGrid";
+import Scrapbook from "@/components/Scrapbook";
 
 export default function About() {
   return (
     <section id="about" className="px-6 py-28 md:px-12 md:py-40">
       <div className="grid gap-16 md:grid-cols-[0.9fr_1.1fr] md:gap-20">
-        <div className="relative aspect-[3/4] w-full max-w-sm">
+        <div className="relative aspect-[3/4] w-full max-w-sm -rotate-2">
           <AssetImage
             src="images/profile.jpg"
             alt="Jesús Araujo"
             label="Foto pendiente — public/images/profile.jpg"
-            className="grayscale"
           />
         </div>
 
@@ -63,18 +31,7 @@ export default function About() {
             mi tiempo se reparte entre anime, cine y videojuegos.
           </p>
 
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {interests.map((interest) => (
-              <div
-                key={interest.label}
-                className="group border border-white/10 p-4 transition hover:border-accent/60 hover:bg-white/[0.03]"
-              >
-                <span className="text-2xl">{interest.emoji}</span>
-                <p className="mt-3 text-sm font-medium">{interest.label}</p>
-                <p className="mt-1 text-xs text-muted">{interest.detail}</p>
-              </div>
-            ))}
-          </div>
+          <InterestsGrid />
 
           <div className="mt-4">
             <span className="font-mono text-xs uppercase tracking-widest text-muted">
@@ -90,6 +47,8 @@ export default function About() {
           </div>
         </div>
       </div>
+
+      <Scrapbook />
     </section>
   );
 }

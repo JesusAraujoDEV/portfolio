@@ -1,0 +1,26 @@
+import PaperPhoto from "@/components/PaperPhoto";
+import { hasPublicAsset } from "@/lib/assets";
+
+const scrapbook = [
+  { src: "images/jesus-dog.png", alt: "Jesús acariciando un perro", caption: "Pausa perruna", rotate: -4 },
+  { src: "images/jesus-thesis.png", alt: "Jesús defendiendo su tesis", caption: "Defensa de tesis · 19/20", rotate: 3 },
+  { src: "images/jesus-sunflower.png", alt: "Jesús con un girasol", caption: "Modo turista", rotate: -2 },
+];
+
+export default function Scrapbook() {
+  const photos = scrapbook.filter((p) => hasPublicAsset(p.src));
+  if (photos.length === 0) return null;
+
+  return (
+    <div className="mt-24 flex flex-wrap justify-center gap-10 md:gap-16">
+      {photos.map((photo) => (
+        <div key={photo.src} className="flex w-40 flex-col items-center gap-3 md:w-48">
+          <PaperPhoto src={`/${photo.src}`} alt={photo.alt} rotate={photo.rotate} />
+          <span className="font-mono text-[11px] uppercase tracking-widest text-muted">
+            {photo.caption}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}

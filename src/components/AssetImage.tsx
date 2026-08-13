@@ -15,7 +15,7 @@ export default function AssetImage({
   if (!hasPublicAsset(src)) {
     return (
       <div
-        className={`flex items-center justify-center border border-dashed border-white/20 bg-white/[0.03] p-6 text-center font-mono text-xs uppercase tracking-widest text-muted ${className ?? ""}`}
+        className={`flex h-full w-full items-center justify-center border border-dashed border-foreground/20 bg-foreground/[0.03] p-6 text-center font-mono text-xs uppercase tracking-widest text-muted ${className ?? ""}`}
       >
         {label}
       </div>
@@ -24,7 +24,7 @@ export default function AssetImage({
 
   return (
     <Image
-      src={src}
+      src={`/${src}`}
       alt={alt}
       fill
       className={`object-cover ${className ?? ""}`}

@@ -14,7 +14,7 @@ export default function NowPlaying() {
           Now playing
         </span>
         <h3 className="mt-3 text-4xl leading-[0.95] tracking-tight md:text-6xl">Olivia Rodrigo</h3>
-        <p className="mt-3 max-w-md text-foreground/80">
+        <p className="mt-3 max-w-xl text-foreground/80">
           Si abres mi Spotify a cualquier hora, hay buenas chances de que esté
           sonando algo de ella. No es una fase.
         </p>

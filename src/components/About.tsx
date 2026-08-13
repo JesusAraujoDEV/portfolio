@@ -1,6 +1,9 @@
 import AssetImage from "@/components/AssetImage";
 import PaperPhoto from "@/components/PaperPhoto";
-import InterestsGrid from "@/components/InterestsGrid";
+import QuickFacts from "@/components/QuickFacts";
+import NowPlaying from "@/components/NowPlaying";
+import GamesSpotlight from "@/components/GamesSpotlight";
+import FavoriteFilms from "@/components/FavoriteFilms";
 import Scrapbook from "@/components/Scrapbook";
 import { hasPublicAsset } from "@/lib/assets";
 
@@ -9,8 +12,8 @@ export default function About() {
 
   return (
     <section id="about" className="px-6 py-28 md:px-12 md:py-40">
-      <div className="grid gap-16 md:grid-cols-[0.9fr_1.1fr] md:gap-20">
-        <div className="relative w-full max-w-sm">
+      <div className="grid gap-12 md:grid-cols-[280px_1fr] md:gap-20">
+        <div className="mx-auto w-48 md:mx-0 md:w-full">
           {hasProfileCutout ? (
             <PaperPhoto src="/images/profile.png" alt="Jesús Araujo" rotate={-2} />
           ) : (
@@ -29,35 +32,24 @@ export default function About() {
             Sobre mí
           </span>
           <h2 className="mt-4 max-w-xl text-3xl leading-tight md:text-5xl">
-            Ingeniero de Computación, dev de profesión, fan de series y
-            videojuegos de tiempo completo.
+            21 años, ingeniero recién graduado, todavía sin dormir bien.
           </h2>
           <p className="mt-6 max-w-xl text-foreground/80">
-            Soy Jesús Araujo, 21 años, de Valencia (Venezuela). Trabajo como
-            Analista de Aplicaciones en Intelix Synergy construyendo un
-            Transportation Management System, y antes desarrollé sistemas de
-            gestión para la Orquesta Sinfónica de Carabobo. Recién defendí mi
-            tesis de Ingeniería de Computación en la UJAP. Fuera del código,
-            mi tiempo se reparte entre anime, cine y videojuegos.
+            Nací y crecí en Valencia. Ahorita en Intelix Synergy metido en un
+            sistema de logística para una empresa de Costa Rica, y hace poco
+            defendí mi tesis en la UJAP con 19/20 — el resultado de varias
+            noches sin dormir que valieron la pena. Antes de eso armé el
+            sistema de pagos de la Orquesta Sinfónica de Carabobo, que sigue
+            corriendo. Cuando cierro la laptop, casi siempre hay una serie,
+            una peli o un control en la mano.
           </p>
-
-          <InterestsGrid />
-
-          <div className="mt-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-muted">
-              Top 4 · Letterboxd
-            </span>
-            <div className="relative mt-3 aspect-[16/9] w-full">
-              <AssetImage
-                src="images/letterboxd-top4.jpg"
-                alt="Top 4 de películas en Letterboxd de Jesús Araujo"
-                label="Imagen pendiente — public/images/letterboxd-top4.jpg"
-              />
-            </div>
-          </div>
         </div>
       </div>
 
+      <QuickFacts />
+      <NowPlaying />
+      <GamesSpotlight />
+      <FavoriteFilms />
       <Scrapbook />
     </section>
   );

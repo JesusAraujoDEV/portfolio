@@ -11,14 +11,14 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="border-t border-white/10 px-6 py-16 md:px-12">
+    <footer id="contact" className="border-t border-foreground/10 px-6 py-16 md:px-12">
       <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
             Contacto
           </span>
           <h2 className="mt-4 max-w-md text-3xl leading-tight md:text-4xl">
-            Hablemos de tu próximo proyecto.
+            ¿Tienes algo en mente? Escríbeme.
           </h2>
           <a
             href="mailto:jesusaraujodev@gmail.com"

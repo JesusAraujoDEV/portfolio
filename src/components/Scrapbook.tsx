@@ -12,15 +12,20 @@ export default function Scrapbook() {
   if (photos.length === 0) return null;
 
   return (
-    <div className="mt-24 flex flex-wrap justify-center gap-10 md:gap-16">
-      {photos.map((photo) => (
-        <div key={photo.src} className="flex w-40 flex-col items-center gap-3 md:w-48">
-          <PaperPhoto src={`/${photo.src}`} alt={photo.alt} rotate={photo.rotate} />
-          <span className="font-mono text-[11px] uppercase tracking-widest text-muted">
-            {photo.caption}
-          </span>
-        </div>
-      ))}
+    <div className="mt-24 border-t border-foreground/10 pt-16">
+      <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
+        Fuera de cámara
+      </span>
+      <div className="mt-10 flex flex-wrap justify-center gap-10 md:justify-start md:gap-16">
+        {photos.map((photo) => (
+          <div key={photo.src} className="flex w-40 flex-col items-center gap-3 md:w-48">
+            <PaperPhoto src={`/${photo.src}`} alt={photo.alt} rotate={photo.rotate} />
+            <span className="font-mono text-[11px] uppercase tracking-widest text-muted">
+              {photo.caption}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

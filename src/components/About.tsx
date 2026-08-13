@@ -1,17 +1,27 @@
 import AssetImage from "@/components/AssetImage";
+import PaperPhoto from "@/components/PaperPhoto";
 import InterestsGrid from "@/components/InterestsGrid";
 import Scrapbook from "@/components/Scrapbook";
+import { hasPublicAsset } from "@/lib/assets";
 
 export default function About() {
+  const hasProfileCutout = hasPublicAsset("images/profile.png");
+
   return (
     <section id="about" className="px-6 py-28 md:px-12 md:py-40">
       <div className="grid gap-16 md:grid-cols-[0.9fr_1.1fr] md:gap-20">
-        <div className="relative aspect-[3/4] w-full max-w-sm -rotate-2">
-          <AssetImage
-            src="images/profile.jpg"
-            alt="Jesús Araujo"
-            label="Foto pendiente — public/images/profile.jpg"
-          />
+        <div className="relative w-full max-w-sm">
+          {hasProfileCutout ? (
+            <PaperPhoto src="/images/profile.png" alt="Jesús Araujo" rotate={-2} />
+          ) : (
+            <div className="relative aspect-[3/4] w-full -rotate-2">
+              <AssetImage
+                src="images/profile.jpg"
+                alt="Jesús Araujo"
+                label="Foto pendiente — public/images/profile.jpg"
+              />
+            </div>
+          )}
         </div>
 
         <div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import HeroBall from "@/components/HeroBall";
 
 const container = {
   hidden: {},
@@ -17,7 +16,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen flex-col justify-center gap-16 px-6 pt-28 pb-20 md:flex-row md:items-center md:justify-between md:px-12"
+      className="relative flex min-h-screen flex-col justify-center px-6 pt-28 pb-20 md:px-12"
     >
       <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl">
         <p className="mb-4 overflow-hidden">
@@ -46,15 +45,6 @@ export default function Hero() {
             sistema de logística para una 4PL de Costa Rica.
           </motion.span>
         </p>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="shrink-0"
-      >
-        <HeroBall />
       </motion.div>
 
       <motion.div

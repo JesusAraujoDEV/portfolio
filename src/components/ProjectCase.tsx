@@ -28,7 +28,10 @@ export default function ProjectCase({ project, index }: { project: Project; inde
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1, 1.08]);
 
   return (
-    <div ref={sectionRef} className="border-t border-foreground/10 py-16 first:border-t-0 first:pt-0 md:py-24">
+    <div
+      ref={sectionRef}
+      className="overflow-x-clip border-t border-foreground/10 py-16 first:border-t-0 first:pt-0 md:py-24"
+    >
       <div
         className={`grid gap-8 md:grid-cols-2 md:items-center md:gap-16 ${reversed ? "md:[&>*:first-child]:order-2" : ""}`}
       >
@@ -85,11 +88,11 @@ export default function ProjectCase({ project, index }: { project: Project; inde
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, clipPath: "inset(4% 4% 4% 4%)" }}
-          whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+          initial={{ opacity: 0, x: reversed ? -64 : 64, clipPath: "inset(4% 4% 4% 4%)" }}
+          whileInView={{ opacity: 1, x: 0, clipPath: "inset(0% 0% 0% 0%)" }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/15 bg-paper"
+          transition={{ duration: 0.9, ease: EASE }}
+          className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/15 bg-paper will-change-transform"
         >
           {cover ? (
             <motion.div style={{ y: imageY, scale: imageScale }} className="absolute inset-0 h-full w-full will-change-transform">

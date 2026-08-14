@@ -17,7 +17,7 @@ const es = {
     about: {
       eyebrow: "Sobre mí",
       heading: "21 años, ingeniero recién graduado, todavía sin dormir bien.",
-      bio: "Nací y crecí en Valencia. Ahorita en Intelix Synergy metido en un sistema de logística para una empresa de Costa Rica, y hace poco defendí mi tesis en la UJAP con 19/20 — el resultado de varias noches sin dormir que valieron la pena. Antes de eso armé el sistema de pagos de la Orquesta Sinfónica de Carabobo, que sigue corriendo. Cuando cierro la laptop, casi siempre hay una serie, una peli o un control en la mano.",
+      bio: "Nací y crecí en Valencia. Ahorita en Intelix Synergy metido en un sistema de logística para una empresa de Costa Rica, y hace poco defendí mi tesis en la UJAP con 19/20 — el resultado de varias noches sin dormir que valieron la pena. Antes de eso armé el sistema de pagos de la Orquesta Sinfónica de Carabobo, que sigue corriendo. Cuando cierro la laptop, casi siempre hay una serie, una peli o un control en la mano — y entre medio le voy metiendo al alemán (A1), con la meta de vivir en Alemania más adelante.",
     },
     experience: {
       eyebrow: "Experiencia",
@@ -72,7 +72,7 @@ const en: typeof es = {
     about: {
       eyebrow: "About me",
       heading: "21 years old, freshly graduated engineer, still not sleeping enough.",
-      bio: "I was born and raised in Valencia. Right now I'm at Intelix Synergy, building a logistics system for a company in Costa Rica, and I recently defended my thesis at UJAP with a 19/20 — the payoff for a bunch of sleepless nights. Before that I built the payment system for the Orquesta Sinfónica de Carabobo, which is still running today. When I close the laptop, there's almost always a show, a movie, or a controller in my hand.",
+      bio: "I was born and raised in Valencia. Right now I'm at Intelix Synergy, building a logistics system for a company in Costa Rica, and I recently defended my thesis at UJAP with a 19/20 — the payoff for a bunch of sleepless nights. Before that I built the payment system for the Orquesta Sinfónica de Carabobo, which is still running today. When I close the laptop, there's almost always a show, a movie, or a controller in my hand — and somewhere in between I'm chipping away at German (A1), with an eye on eventually living in Germany.",
     },
     experience: {
       eyebrow: "Experience",
@@ -126,7 +126,7 @@ const de: typeof es = {
     about: {
       eyebrow: "Über mich",
       heading: "21 Jahre alt, frisch graduierter Ingenieur, schläft immer noch zu wenig.",
-      bio: "Ich bin in Valencia geboren und aufgewachsen. Gerade arbeite ich bei Intelix Synergy an einem Logistiksystem für ein Unternehmen aus Costa Rica, und vor Kurzem habe ich meine Abschlussarbeit an der UJAP mit einer 19/20 verteidigt — das Ergebnis einiger durchwachter Nächte, die sich gelohnt haben. Davor habe ich das Zahlungssystem der Orquesta Sinfónica de Carabobo gebaut, das bis heute läuft. Wenn ich den Laptop zuklappe, habe ich fast immer eine Serie, einen Film oder einen Controller in der Hand.",
+      bio: "Ich bin in Valencia geboren und aufgewachsen. Gerade arbeite ich bei Intelix Synergy an einem Logistiksystem für ein Unternehmen aus Costa Rica, und vor Kurzem habe ich meine Abschlussarbeit an der UJAP mit einer 19/20 verteidigt — das Ergebnis einiger durchwachter Nächte, die sich gelohnt haben. Davor habe ich das Zahlungssystem der Orquesta Sinfónica de Carabobo gebaut, das bis heute läuft. Wenn ich den Laptop zuklappe, habe ich fast immer eine Serie, einen Film oder einen Controller in der Hand — und nebenbei lerne ich gerade Deutsch (A1), mit dem Ziel, irgendwann in Deutschland zu leben.",
     },
     experience: {
       eyebrow: "Erfahrung",

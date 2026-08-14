@@ -1,9 +1,17 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Shot from "@/components/Shot";
-import Reveal from "@/components/Reveal";
+import ProjectGallery from "@/components/ProjectGallery";
 import { useLocale, useT } from "@/components/LocaleProvider";
 import type { Project } from "@/lib/projects";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
 
 export default function ProjectCase({ project, index }: { project: Project; index: number }) {
   const { locale } = useLocale();
@@ -12,23 +20,55 @@ export default function ProjectCase({ project, index }: { project: Project; inde
   const gallery = project.images?.slice(1) ?? [];
   const reversed = index % 2 === 1;
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  // Subtle parallax drift + scale on the cover as it crosses the viewport —
+  // transform-only so it stays cheap on mobile.
+  const imageY = useTransform(scrollYProgress, [0, 1], [-24, 24]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1, 1.08]);
+
   return (
-    <Reveal className="border-t border-foreground/10 py-16 first:border-t-0 first:pt-0 md:py-24">
+    <div ref={sectionRef} className="border-t border-foreground/10 py-16 first:border-t-0 first:pt-0 md:py-24">
       <div
         className={`grid gap-8 md:grid-cols-2 md:items-center md:gap-16 ${reversed ? "md:[&>*:first-child]:order-2" : ""}`}
       >
-        <div>
-          <div className="flex items-baseline gap-4 font-mono text-xs uppercase tracking-widest text-muted">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
+        >
+          <motion.div variants={textVariants} className="flex items-baseline gap-4 font-mono text-xs uppercase tracking-widest text-muted">
             <span>{String(index + 1).padStart(2, "0")}</span>
             <span>{project.year}</span>
-          </div>
-          <h3 className="mt-3 text-4xl leading-[0.95] tracking-tight md:text-6xl">{project.name}</h3>
-          <p className="mt-3 text-sm text-muted">{project.role[locale]}</p>
-          <p className="mt-6 max-w-md text-foreground/80">{project.description[locale]}</p>
-          <p className="mt-4 font-mono text-xs uppercase tracking-wider text-accent">{project.stack}</p>
-          {project.repos && project.repos.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-              {project.repos.map((repo) => (
+          </motion.div>
+          <motion.h3 variants={textVariants} className="mt-3 text-4xl leading-[0.95] tracking-tight md:text-6xl">
+            {project.name}
+          </motion.h3>
+          <motion.p variants={textVariants} className="mt-3 text-sm text-muted">
+            {project.role[locale]}
+          </motion.p>
+          <motion.p variants={textVariants} className="mt-6 max-w-md text-foreground/80">
+            {project.description[locale]}
+          </motion.p>
+          <motion.p variants={textVariants} className="mt-4 font-mono text-xs uppercase tracking-wider text-accent">
+            {project.stack}
+          </motion.p>
+
+          {(project.liveUrl || (project.repos && project.repos.length > 0)) && (
+            <motion.div variants={textVariants} className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cursor={t.cursor.viewLive}
+                  className="font-mono text-xs uppercase tracking-widest text-muted underline decoration-muted/40 underline-offset-4 transition hover:text-accent hover:decoration-accent"
+                >
+                  {t.projects.liveSite}
+                </a>
+              )}
+              {project.repos?.map((repo) => (
                 <a
                   key={repo.url}
                   href={repo.url}
@@ -40,33 +80,30 @@ export default function ProjectCase({ project, index }: { project: Project; inde
                   {repo.label[locale]}
                 </a>
               ))}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
-        <div className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/15 bg-paper">
+        <motion.div
+          initial={{ opacity: 0, clipPath: "inset(4% 4% 4% 4%)" }}
+          whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/15 bg-paper"
+        >
           {cover ? (
-            <Shot src={cover} alt={`Captura de ${project.name}`} className="absolute inset-0 h-full w-full" />
+            <motion.div style={{ y: imageY, scale: imageScale }} className="absolute inset-0 h-full w-full will-change-transform">
+              <Shot src={cover} alt={`Captura de ${project.name}`} className="h-full w-full" />
+            </motion.div>
           ) : (
             <span className="absolute inset-0 flex items-center justify-center font-mono text-[9rem] font-bold text-foreground/[0.06] md:text-[11rem]">
               {String(index + 1).padStart(2, "0")}
             </span>
           )}
-        </div>
+        </motion.div>
       </div>
 
-      {gallery.length > 0 && (
-        <div className="mt-8 flex gap-4 overflow-x-auto pb-2">
-          {gallery.map((src) => (
-            <Shot
-              key={src}
-              src={src}
-              alt={`Captura de ${project.name}`}
-              className="h-40 w-60 shrink-0 md:h-48 md:w-72"
-            />
-          ))}
-        </div>
-      )}
-    </Reveal>
+      <ProjectGallery images={gallery} name={project.name} />
+    </div>
   );
 }

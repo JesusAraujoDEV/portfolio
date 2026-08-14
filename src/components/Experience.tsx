@@ -32,14 +32,13 @@ export default function Experience() {
               key={item.org}
               className={`relative grid gap-2 md:grid-cols-[220px_1fr] md:gap-10 ${i > 0 ? "mt-14" : ""}`}
             >
-              <span className="absolute top-1.5 left-2 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent" />
               <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-3">
                 {item.logo && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={item.logo}
                     alt={item.org}
-                    className="h-8 w-8 shrink-0 rounded-full border border-foreground/15 object-cover"
+                    className="h-14 w-14 shrink-0 rounded-full border border-foreground/15 object-cover md:h-16 md:w-16"
                   />
                 )}
                 <span className="font-mono text-xs uppercase tracking-widest text-accent">

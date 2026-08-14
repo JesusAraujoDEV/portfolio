@@ -2,7 +2,7 @@ import type { Locale } from "@/lib/i18n";
 
 const es = {
     nav: { about: "Sobre mí", experience: "Experiencia", projects: "Proyectos", gustos: "Mis gustos", contact: "Contacto" },
-    cursor: { go: "IR", view: "VER", viewRepo: "VER REPO", write: "ESCRIBIR" },
+    cursor: { go: "IR", view: "VER", viewRepo: "VER REPO", viewLive: "VER SITIO", write: "ESCRIBIR" },
     hero: {
       pitchBefore:
         "Programo cosas que la gente termina usando de verdad: APIs que no se caen, dashboards que se entienden a la primera, procesos que antes tomaban horas y ahora corren solos. Ahora mismo, en ",
@@ -27,6 +27,7 @@ const es = {
     projects: {
       eyebrow: "Proyectos",
       heading: "Cosas que construí y que siguen funcionando.",
+      liveSite: "Ver sitio →",
     },
     interests: {
       eyebrow: "Mis gustos",
@@ -56,7 +57,7 @@ const es = {
 
 const en: typeof es = {
     nav: { about: "About", experience: "Experience", projects: "Projects", gustos: "Things I like", contact: "Contact" },
-    cursor: { go: "GO", view: "VIEW", viewRepo: "VIEW REPO", write: "WRITE" },
+    cursor: { go: "GO", view: "VIEW", viewRepo: "VIEW REPO", viewLive: "VIEW SITE", write: "WRITE" },
     hero: {
       pitchBefore:
         "I build things people actually end up using: APIs that don't go down, dashboards that make sense on the first look, processes that used to take hours and now run on their own. Right now, at ",
@@ -81,6 +82,7 @@ const en: typeof es = {
     projects: {
       eyebrow: "Projects",
       heading: "Things I built that are still running.",
+      liveSite: "View site →",
     },
     interests: {
       eyebrow: "Things I like",
@@ -109,7 +111,7 @@ const en: typeof es = {
 
 const de: typeof es = {
     nav: { about: "Über mich", experience: "Erfahrung", projects: "Projekte", gustos: "Meine Interessen", contact: "Kontakt" },
-    cursor: { go: "LOS", view: "ANSEHEN", viewRepo: "REPO ANSEHEN", write: "SCHREIBEN" },
+    cursor: { go: "LOS", view: "ANSEHEN", viewRepo: "REPO ANSEHEN", viewLive: "SEITE ANSEHEN", write: "SCHREIBEN" },
     hero: {
       pitchBefore:
         "Ich programmiere Dinge, die Leute wirklich benutzen: APIs, die nicht abstürzen, Dashboards, die man auf Anhieb versteht, Prozesse, die früher Stunden dauerten und jetzt von allein laufen. Gerade jetzt, bei ",
@@ -134,6 +136,7 @@ const de: typeof es = {
     projects: {
       eyebrow: "Projekte",
       heading: "Dinge, die ich gebaut habe und die immer noch laufen.",
+      liveSite: "Seite ansehen →",
     },
     interests: {
       eyebrow: "Meine Interessen",

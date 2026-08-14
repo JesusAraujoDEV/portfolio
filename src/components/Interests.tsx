@@ -32,7 +32,7 @@ export default function Interests() {
           </p>
         </Reveal>
 
-        <div className="mt-16">
+        <div className="mt-16 overflow-x-clip">
           <FandomPile />
         </div>
 

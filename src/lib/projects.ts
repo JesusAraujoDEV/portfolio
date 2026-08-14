@@ -8,6 +8,7 @@ export type Project = {
   stack: string;
   images?: string[];
   repos?: { label: Localized; url: string }[];
+  liveUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     },
     stack: "React · Node.js · Chart.js",
     images: ["/images/platica.png", "/images/platica-stats.png", "/images/platica-transactions.png"],
+    liveUrl: "https://platica.lat",
     repos: [
       {
         label: { es: "Frontend →", en: "Frontend →", de: "Frontend →" },
@@ -52,6 +54,7 @@ export const projects: Project[] = [
     },
     stack: "Node.js · Express · PostgreSQL · Docker",
     images: ["/images/mediart.png", "/images/mediart-profile.png"],
+    liveUrl: "https://mediart.jesusaraujo.lat",
     repos: [
       {
         label: { es: "Ver repo →", en: "View repo →", de: "Repo ansehen →" },
@@ -99,7 +102,7 @@ export const projects: Project[] = [
       de: "Das lief vorher alles per Hand. Ich habe das System für Anmeldungen, Kurse und Zahlungen mit automatischen PDF-Quittungen gebaut — es hat die Bearbeitungszeit um 40 % gesenkt und wird immer noch genutzt.",
     },
     stack: "Node.js · Express · MySQL",
-    images: ["/images/orquesta-2.png", "/images/orquesta-login.png"],
+    images: ["/images/orquesta-login.png", "/images/orquesta-2.png"],
   },
   {
     year: "2024",
@@ -116,6 +119,7 @@ export const projects: Project[] = [
     },
     stack: "Flutter · NestJS · PostgreSQL · TypeORM · TensorFlow Lite",
     images: [
+      "/images/jepo-main-image.png",
       "/images/jepo-modulos.png",
       "/images/jepo-login.png",
       "/images/jepo-grafo-familiar.png",

@@ -47,6 +47,7 @@ export const experience: ExperienceItem[] = [
       de: "Informatik-Ingenieurwesen",
     },
     org: "Universidad José Antonio Páez",
+    logo: "/images/ujap-logo.png",
     description: {
       es: "Tesis: Sistema de Navegación Peatonal Asistida, defendida con 19/20. Graduación oficial en octubre 2026.",
       en: "Thesis: Assisted Pedestrian Navigation System, defended with a 19/20. Official graduation in October 2026.",

@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useLightbox } from "@/components/LightboxProvider";
 import { useT } from "@/components/LocaleProvider";
 
@@ -8,11 +9,13 @@ export default function Shot({
   alt,
   className = "",
   caption,
+  style,
 }: {
   src: string;
   alt: string;
   className?: string;
   caption?: string;
+  style?: CSSProperties;
 }) {
   const { open } = useLightbox();
   const t = useT();
@@ -23,6 +26,7 @@ export default function Shot({
       onClick={() => open(src, alt, caption)}
       aria-label={`${t.cursor.view} ${alt}`}
       data-cursor={t.cursor.view}
+      style={style}
       className={`group block overflow-hidden border border-foreground/15 ${className}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

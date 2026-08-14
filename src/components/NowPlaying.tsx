@@ -12,7 +12,7 @@ export default function NowPlaying() {
   return (
     <Reveal className="mt-24 grid gap-8 border-t border-foreground/10 pt-16 md:grid-cols-[280px_1fr] md:items-center md:gap-16">
       <div className="mx-auto w-48 md:mx-0 md:w-full">
-        <PaperPhoto src="/images/olivia-rodrigo.png" alt="Olivia Rodrigo" rotate={-4} />
+        <PaperPhoto src="/images/olivia-rodrigo-v2.png" alt="Olivia Rodrigo" rotate={-4} />
       </div>
       <div className="min-w-0">
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">

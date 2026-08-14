@@ -6,28 +6,40 @@ import Shot from "@/components/Shot";
 import { useLocale } from "@/components/LocaleProvider";
 import { fandomItems } from "@/lib/fandomItems";
 
-// ponytail: emoji badge instead of another caption box — cheapest "picked up"
-// feedback that also works on touch (data-cursor pill is pointer:fine only).
-// Plain CSS transition, not framer's imperative animate: a two-state opacity
-// flip doesn't need a JS animation loop, and it keeps the toggle synchronous
-// (verifiable via computed style right after the state change).
-function PickupBadge({ show }: { show: boolean }) {
+// ponytail: caption bubble anchored to the dragged element (absolute child of
+// the transformed motion.div) rather than cursor-tracked — it rides along for
+// free with the drag transform, no extra rAF/position math needed.
+function DragCaption({ show, text }: { show: boolean; text: string }) {
   return (
-    <span
+    <div
       aria-hidden
-      className={`pointer-events-none absolute -top-3 -right-3 z-50 select-none text-2xl drop-shadow transition-all duration-150 ${
-        show ? "translate-y-0 scale-100 opacity-100" : "translate-y-1 scale-50 opacity-0"
+      className={`pointer-events-none absolute top-full left-1/2 z-50 mt-2 w-40 -translate-x-1/2 select-none rounded-md border border-foreground/15 bg-background/95 px-2 py-1.5 text-[11px] leading-tight text-foreground shadow-lg backdrop-blur transition-opacity duration-150 ${
+        show ? "opacity-100" : "opacity-0"
       }`}
     >
-      ✋
-    </span>
+      <span aria-hidden>✋ </span>
+      {text}
+    </div>
   );
 }
 
 export default function FandomPile() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingKey, setDraggingKey] = useState<string | null>(null);
+  // Framer Motion doesn't suppress the native click that follows a drag's
+  // pointerup on the same element — without this, dropping an item re-opens
+  // the lightbox. onDragStart marks the gesture; the capture-phase click
+  // handler swallows exactly the one spurious click, then clears the flag.
+  const justDraggedRef = useRef(false);
   const { locale } = useLocale();
+
+  const swallowDragClick = (e: React.MouseEvent) => {
+    if (justDraggedRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      justDraggedRef.current = false;
+    }
+  };
 
   return (
     <>
@@ -43,11 +55,15 @@ export default function FandomPile() {
             dragConstraints={{ top: -14, left: -14, right: 14, bottom: 14 }}
             whileDrag={{ scale: 1.08, zIndex: 40 }}
             initial={{ rotate: item.rotate * 0.6 }}
-            onDragStart={() => setDraggingKey(item.key)}
+            onDragStart={() => {
+              justDraggedRef.current = true;
+              setDraggingKey(item.key);
+            }}
             onDragEnd={() => setDraggingKey(null)}
+            onClickCapture={swallowDragClick}
             className="relative w-24 shrink-0 cursor-grab touch-none active:cursor-grabbing"
           >
-            <PickupBadge show={draggingKey === item.key} />
+            <DragCaption show={draggingKey === item.key} text={item.caption[locale]} />
             <Shot src={item.src} alt={item.alt} caption={item.caption[locale]} className={item.aspect} />
           </motion.div>
         ))}
@@ -67,12 +83,16 @@ export default function FandomPile() {
             dragConstraints={containerRef}
             whileDrag={{ scale: 1.06, zIndex: 40 }}
             initial={{ rotate: item.rotate }}
-            onDragStart={() => setDraggingKey(item.key)}
+            onDragStart={() => {
+              justDraggedRef.current = true;
+              setDraggingKey(item.key);
+            }}
             onDragEnd={() => setDraggingKey(null)}
+            onClickCapture={swallowDragClick}
             className={`absolute cursor-grab touch-none active:cursor-grabbing ${item.sizeDesktop}`}
             style={{ top: item.top, left: item.left }}
           >
-            <PickupBadge show={draggingKey === item.key} />
+            <DragCaption show={draggingKey === item.key} text={item.caption[locale]} />
             <Shot src={item.src} alt={item.alt} caption={item.caption[locale]} className={item.aspect} />
           </motion.div>
         ))}

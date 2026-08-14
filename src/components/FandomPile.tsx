@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, type PanInfo } from "framer-motion";
 import { useLocale } from "@/components/LocaleProvider";
 import { fandomItems, type FandomItem } from "@/lib/fandomItems";
+import FandomMobileItem from "@/components/FandomMobileItem";
 
 // ponytail: no translations.ts entry for this (owned by a parallel agent
 // this round) — three short literals inline, same pattern as fandomCaptions.
@@ -15,6 +16,7 @@ const EDGE_MARGIN = 8;
 
 export default function FandomPile() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [draggingKey, setDraggingKey] = useState<string | null>(null);
   // ponytail: tooltip position tracks the real pointer via its own
@@ -71,26 +73,22 @@ export default function FandomPile() {
 
   return (
     <>
-      {/* Mobile: contained wrapped grid, small drag jitter only — an absolute scatter
-          at 375px overflows or becomes unreachable, so mobile gets its own layout. */}
-      <div className="flex flex-wrap justify-center gap-3 sm:hidden">
-        {fandomItems.map((item) => (
-          <motion.div
-            key={item.key}
-            drag
-            dragMomentum={false}
-            dragElastic={0.2}
-            dragConstraints={{ top: -14, left: -14, right: 14, bottom: 14 }}
-            whileDrag={{ scale: 1.08, zIndex: 40 }}
-            initial={{ rotate: item.rotate * 0.6 }}
-            onDragStart={startDrag(item)}
-            onDragEnd={() => setDraggingKey(null)}
-            data-cursor={draggingKey === item.key ? draggingLabel[locale] : dragLabel[locale]}
-            className="relative w-24 shrink-0 cursor-grab touch-none active:cursor-grabbing"
-          >
-            <Poster item={item} />
-          </motion.div>
-        ))}
+      {/* Mobile: wrapped flex for initial layout, but free "PowerPoint style" drag
+          across the whole section — bounded to this container so nothing can be
+          dragged into page overflow. */}
+      <div ref={mobileContainerRef} className="relative min-h-[520px] overflow-hidden sm:hidden">
+        <div className="flex flex-wrap justify-center gap-3">
+          {fandomItems.map((item) => (
+            <FandomMobileItem
+              key={item.key}
+              item={item}
+              containerRef={mobileContainerRef}
+              cursorLabel={draggingKey === item.key ? draggingLabel[locale] : dragLabel[locale]}
+              onDragStart={startDrag(item)}
+              onDragEnd={() => setDraggingKey(null)}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Desktop/tablet: draggable scattered pile */}

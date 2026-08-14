@@ -1,7 +1,18 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import { useT } from "@/components/LocaleProvider";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+const navContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.2 } },
+};
+const navItem = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } },
+};
 
 const links = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/jesusaraujodev/" },
@@ -37,19 +48,26 @@ export default function Footer() {
             </a>
           </div>
 
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-widest text-muted">
+          <motion.nav
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={navContainer}
+            className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-widest text-muted"
+          >
             {links.map((link) => (
-              <a
+              <motion.a
                 key={link.label}
+                variants={navItem}
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
                 className="transition hover:text-foreground"
               >
                 {link.label}
-              </a>
+              </motion.a>
             ))}
-          </nav>
+          </motion.nav>
         </Reveal>
 
         <p className="mt-16 font-mono text-[11px] text-muted">

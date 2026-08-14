@@ -1,15 +1,34 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import { useLocale, useT } from "@/components/LocaleProvider";
 import { experience } from "@/lib/experience";
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+const timelineItem = {
+  hidden: { opacity: 0, x: -32 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
+
 export default function Experience() {
   const { locale } = useLocale();
   const t = useT();
+  const sectionRef = useRef<HTMLElement>(null);
+  // Whole section drifts up and fades as it exits the top of the viewport —
+  // same technique as AboutStage, scoped to this section only.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const exitY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const exitOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
 
   return (
-    <section id="experience" className="px-6 py-28 md:px-12 md:py-40">
+    <motion.section
+      ref={sectionRef}
+      id="experience"
+      style={{ y: exitY, opacity: exitOpacity }}
+      className="overflow-x-clip px-6 py-28 will-change-transform md:px-12 md:py-40"
+    >
       <div className="mx-auto max-w-6xl">
         <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -28,8 +47,12 @@ export default function Experience() {
         <div className="relative mt-16 pl-8">
           <div className="absolute top-2 bottom-2 left-2 w-px bg-foreground/15" />
           {experience.map((item, i) => (
-            <Reveal
+            <motion.div
               key={item.org}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={timelineItem}
               className={`relative grid gap-2 md:grid-cols-[220px_1fr] md:gap-10 ${i > 0 ? "mt-14" : ""}`}
             >
               <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-3">
@@ -50,10 +73,10 @@ export default function Experience() {
                 <p className="text-sm text-muted">{item.org}</p>
                 <p className="mt-3 max-w-2xl text-foreground/80">{item.description[locale]}</p>
               </div>
-            </Reveal>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

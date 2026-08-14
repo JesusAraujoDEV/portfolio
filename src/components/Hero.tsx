@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import PaperCycler from "@/components/PaperCycler";
 import { useT } from "@/components/LocaleProvider";
 
@@ -16,11 +17,21 @@ const item = {
 
 export default function Hero() {
   const t = useT();
+  const sectionRef = useRef<HTMLElement>(null);
+  // Hero has no scroll-in entrance (it's the first thing on load, handled by
+  // the `container`/`item` variants above via initial+animate). It does get
+  // a scroll-out: as About scrolls up to cover it, Hero recedes — fades and
+  // scales down slightly — instead of just vanishing under the next section.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
   return (
-    <section
+    <motion.section
+      ref={sectionRef}
       id="top"
-      className="relative flex min-h-screen flex-col justify-center px-6 pt-28 pb-20 md:px-12"
+      style={{ opacity: heroOpacity, scale: heroScale }}
+      className="relative flex min-h-screen flex-col justify-center overflow-x-clip px-6 pt-28 pb-20 will-change-transform md:px-12"
     >
       <div className="mx-auto grid w-full max-w-6xl gap-12 md:grid-cols-[1fr_auto] md:items-end">
         <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl">
@@ -91,6 +102,6 @@ export default function Hero() {
       >
         {t.hero.scroll}
       </motion.div>
-    </section>
+    </motion.section>
   );
 }

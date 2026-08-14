@@ -1,10 +1,6 @@
 import AssetImage from "@/components/AssetImage";
 import PaperPhoto from "@/components/PaperPhoto";
 import Reveal from "@/components/Reveal";
-import QuickFacts from "@/components/QuickFacts";
-import NowPlaying from "@/components/NowPlaying";
-import GamesSpotlight from "@/components/GamesSpotlight";
-import FavoriteFilms from "@/components/FavoriteFilms";
 import { hasPublicAsset } from "@/lib/assets";
 
 export default function About() {
@@ -13,8 +9,8 @@ export default function About() {
   return (
     <section id="about" className="px-6 py-28 md:px-12 md:py-40">
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-12 md:grid-cols-[320px_1fr] md:gap-20">
-          <div className="mx-auto w-48 md:mx-0 md:w-full">
+        <div className="grid gap-12 md:grid-cols-[320px_1fr] md:gap-20 lg:grid-cols-[420px_1fr]">
+          <div className="mx-auto w-64 sm:w-80 md:mx-0 md:w-full min-w-0">
             {hasProfileCutout ? (
               <PaperPhoto src="/images/profile.png" alt="Jesús Araujo" rotate={-2} />
             ) : (
@@ -28,7 +24,7 @@ export default function About() {
             )}
           </div>
 
-          <Reveal>
+          <Reveal className="min-w-0">
             <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
               Sobre mí
             </span>
@@ -46,11 +42,6 @@ export default function About() {
             </p>
           </Reveal>
         </div>
-
-        <QuickFacts />
-        <NowPlaying />
-        <GamesSpotlight />
-        <FavoriteFilms />
       </div>
     </section>
   );

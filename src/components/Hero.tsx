@@ -27,7 +27,6 @@ export default function Hero() {
                 Valencia, Venezuela
               </motion.span>
             </p>
-            <PaperCycler />
           </div>
           <h1 className="text-[15vw] font-medium leading-[0.9] tracking-tight md:text-[6.5vw]">
             <span className="block overflow-hidden">
@@ -52,23 +51,35 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-          className="hidden shrink-0 flex-col gap-6 md:flex md:items-end"
-        >
-          {[
-            { label: "Rol", value: "Full-Stack Developer" },
-            { label: "Ahora en", value: "Intelix Synergy" },
-            { label: "Stack", value: "TypeScript · Node · Next.js" },
-          ].map((fact) => (
-            <div key={fact.label} className="text-right font-mono text-xs uppercase tracking-widest">
-              <span className="block text-muted">{fact.label}</span>
-              <span className="text-foreground">{fact.value}</span>
-            </div>
-          ))}
-        </motion.div>
+        <div className="hidden shrink-0 flex-col items-end gap-10 md:flex">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="relative h-56 w-56 lg:h-72 lg:w-72"
+          >
+            <div className="absolute inset-[-20%] -z-10 rounded-full bg-accent/20 blur-3xl" />
+            <PaperCycler className="h-full w-full" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="flex flex-col items-end gap-6"
+          >
+            {[
+              { label: "Rol", value: "Full-Stack Developer" },
+              { label: "Ahora en", value: "Intelix Synergy" },
+              { label: "Stack", value: "TypeScript · Node · Next.js" },
+            ].map((fact) => (
+              <div key={fact.label} className="text-right font-mono text-xs uppercase tracking-widest">
+                <span className="block text-muted">{fact.label}</span>
+                <span className="text-foreground">{fact.value}</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
       <motion.div

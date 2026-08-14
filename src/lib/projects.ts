@@ -33,6 +33,7 @@ export const projects: Project[] = [
     description:
       "Antes esto se llevaba a mano. Armé el sistema de inscripciones, cursos y pagos con recibos en PDF automáticos — bajó el tiempo de procesamiento en un 40% y todavía lo usan.",
     stack: "Node.js · Express · MySQL",
+    images: ["/images/orquesta-2.png", "/images/orquesta-login.png"],
   },
   {
     year: "2024",
@@ -41,6 +42,7 @@ export const projects: Project[] = [
     description:
       "Con 3 compañeros más: una app donde pides un servicio técnico y el técnico más cercano te ve en el mapa y te contacta directo. Mi parte fue la coordinación entre solicitudes y técnicos.",
     stack: "React Native · Postman",
+    images: ["/images/fixit.png", "/images/fixit-2.png"],
   },
   {
     year: "2023",
@@ -49,5 +51,13 @@ export const projects: Project[] = [
     description:
       "Patos radioactivos escapando de una base militar, o peleando entre ellos en modo versus. Lo hice para el aniversario de la escuela y terminó ganando.",
     stack: "Unity",
+    images: [
+      "/images/deggs.png",
+      "/images/deggs-gameplay.png",
+      "/images/deggs-gameplay-2.png",
+      "/images/deggs-gameplay-3.png",
+      "/images/deggs-gameplay-4.png",
+      "/images/deggs-menu-modo-juego.png",
+    ],
   },
 ];

@@ -9,7 +9,11 @@ const photos = [
   { src: "/images/jesus-sunflower.png", alt: "Jesús con un girasol", rotate: -2 },
 ];
 
-export default function PaperCycler({ className = "" }: { className?: string }) {
+export default function PaperCycler({
+  className = "h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24",
+}: {
+  className?: string;
+}) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -20,7 +24,7 @@ export default function PaperCycler({ className = "" }: { className?: string }) 
   const photo = photos[index];
 
   return (
-    <div className={`relative h-16 w-16 shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24 ${className}`}>
+    <div className={`relative shrink-0 ${className}`}>
       <AnimatePresence mode="popLayout">
         <motion.img
           key={photo.src}

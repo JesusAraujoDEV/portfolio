@@ -1,9 +1,10 @@
 import LocalClock from "@/components/LocalClock";
 
 const links = [
-  { href: "#experience", label: "Experiencia" },
   { href: "#about", label: "Sobre mí" },
+  { href: "#experience", label: "Experiencia" },
   { href: "#projects", label: "Proyectos" },
+  { href: "#gustos", label: "Mis gustos" },
   { href: "#contact", label: "Contacto" },
 ];
 

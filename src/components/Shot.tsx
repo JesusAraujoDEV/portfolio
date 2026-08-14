@@ -1,6 +1,7 @@
 "use client";
 
 import { useLightbox } from "@/components/LightboxProvider";
+import { useT } from "@/components/LocaleProvider";
 
 export default function Shot({
   src,
@@ -14,13 +15,14 @@ export default function Shot({
   caption?: string;
 }) {
   const { open } = useLightbox();
+  const t = useT();
 
   return (
     <button
       type="button"
       onClick={() => open(src, alt, caption)}
-      aria-label={`Ver ${alt} en grande`}
-      data-cursor="VER"
+      aria-label={`${t.cursor.view} ${alt}`}
+      data-cursor={t.cursor.view}
       className={`group block overflow-hidden border border-foreground/15 ${className}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

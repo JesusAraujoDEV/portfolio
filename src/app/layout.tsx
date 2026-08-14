@@ -3,6 +3,7 @@ import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import { LightboxProvider } from "@/components/LightboxProvider";
+import { LocaleProvider } from "@/components/LocaleProvider";
 import Atmosphere from "@/components/Atmosphere";
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,7 +31,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col overflow-x-hidden">
         <Atmosphere />
         <CustomCursor />
-        <LightboxProvider>{children}</LightboxProvider>
+        <LocaleProvider>
+          <LightboxProvider>{children}</LightboxProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

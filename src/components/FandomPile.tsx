@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Shot from "@/components/Shot";
+import { useLocale } from "@/components/LocaleProvider";
 import { fandomItems } from "@/lib/fandomItems";
 
 // ponytail: emoji badge instead of another caption box — cheapest "picked up"
@@ -26,6 +27,7 @@ function PickupBadge({ show }: { show: boolean }) {
 export default function FandomPile() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingKey, setDraggingKey] = useState<string | null>(null);
+  const { locale } = useLocale();
 
   return (
     <>
@@ -46,7 +48,7 @@ export default function FandomPile() {
             className="relative w-24 shrink-0 cursor-grab touch-none active:cursor-grabbing"
           >
             <PickupBadge show={draggingKey === item.key} />
-            <Shot src={item.src} alt={item.alt} caption={item.caption} className={item.aspect} />
+            <Shot src={item.src} alt={item.alt} caption={item.caption[locale]} className={item.aspect} />
           </motion.div>
         ))}
       </div>
@@ -71,7 +73,7 @@ export default function FandomPile() {
             style={{ top: item.top, left: item.left }}
           >
             <PickupBadge show={draggingKey === item.key} />
-            <Shot src={item.src} alt={item.alt} caption={item.caption} className={item.aspect} />
+            <Shot src={item.src} alt={item.alt} caption={item.caption[locale]} className={item.aspect} />
           </motion.div>
         ))}
       </div>

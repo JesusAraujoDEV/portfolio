@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PaperCycler from "@/components/PaperCycler";
+import { useT } from "@/components/LocaleProvider";
 
 const container = {
   hidden: {},
@@ -14,6 +15,8 @@ const item = {
 };
 
 export default function Hero() {
+  const t = useT();
+
   return (
     <section
       id="top"
@@ -42,11 +45,9 @@ export default function Hero() {
           </h1>
           <p className="mt-8 max-w-md overflow-hidden">
             <motion.span variants={item} className="block text-base text-foreground/80 md:text-lg">
-              Programo cosas que la gente termina usando de verdad: APIs que no
-              se caen, dashboards que se entienden a la primera, procesos que
-              antes tomaban horas y ahora corren solos. Ahora mismo, en{" "}
-              <span className="text-accent">Intelix Synergy</span>, armando un
-              sistema de logística para una 4PL de Costa Rica.
+              {t.hero.pitchBefore}
+              <span className="text-accent">Intelix Synergy</span>
+              {t.hero.pitchAfter}
             </motion.span>
           </p>
         </motion.div>
@@ -69,9 +70,9 @@ export default function Hero() {
             className="flex flex-col items-end gap-6"
           >
             {[
-              { label: "Rol", value: "Full-Stack Developer" },
-              { label: "Ahora en", value: "Intelix Synergy" },
-              { label: "Stack", value: "TypeScript · Node · Next.js" },
+              { label: t.hero.rol, value: t.hero.rolValue },
+              { label: t.hero.ahoraEn, value: "Intelix Synergy" },
+              { label: t.hero.stack, value: t.hero.stackValue },
             ].map((fact) => (
               <div key={fact.label} className="text-right font-mono text-xs uppercase tracking-widest">
                 <span className="block text-muted">{fact.label}</span>
@@ -88,7 +89,7 @@ export default function Hero() {
         transition={{ delay: 1, duration: 0.6 }}
         className="absolute bottom-8 left-6 font-mono text-xs uppercase tracking-widest text-muted md:left-12"
       >
-        Scroll ↓
+        {t.hero.scroll}
       </motion.div>
     </section>
   );

@@ -1,11 +1,15 @@
-import Reveal from "@/components/Reveal";
+"use client";
 
-const facts = [
-  { label: "Magallanes", note: "beisbol venezolano, así perdamos siempre" },
-  { label: "Valencia, VE", note: "de aquí soy, aquí sigo construyendo" },
-];
+import Reveal from "@/components/Reveal";
+import { useT } from "@/components/LocaleProvider";
 
 export default function QuickFacts() {
+  const t = useT();
+  const facts = [
+    { label: "Magallanes", note: t.quickFacts.magallanesNote },
+    { label: "Valencia, VE", note: t.quickFacts.valenciaNote },
+  ];
+
   return (
     <Reveal>
       <ul className="divide-y divide-foreground/10 border-y border-foreground/10">

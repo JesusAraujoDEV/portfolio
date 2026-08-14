@@ -1,6 +1,6 @@
 import AssetImage from "@/components/AssetImage";
 import PaperPhoto from "@/components/PaperPhoto";
-import Reveal from "@/components/Reveal";
+import AboutCopy from "@/components/AboutCopy";
 import { hasPublicAsset } from "@/lib/assets";
 
 export default function About() {
@@ -29,23 +29,7 @@ export default function About() {
             )}
           </div>
 
-          <Reveal className="min-w-0">
-            <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
-              Sobre mí
-            </span>
-            <h2 className="mt-4 max-w-2xl text-4xl leading-[0.95] tracking-tight md:text-6xl">
-              21 años, ingeniero recién graduado, todavía sin dormir bien.
-            </h2>
-            <p className="mt-6 max-w-2xl text-foreground/80">
-              Nací y crecí en Valencia. Ahorita en Intelix Synergy metido en un
-              sistema de logística para una empresa de Costa Rica, y hace poco
-              defendí mi tesis en la UJAP con 19/20 — el resultado de varias
-              noches sin dormir que valieron la pena. Antes de eso armé el
-              sistema de pagos de la Orquesta Sinfónica de Carabobo, que sigue
-              corriendo. Cuando cierro la laptop, casi siempre hay una serie,
-              una peli o un control en la mano.
-            </p>
-          </Reveal>
+          <AboutCopy />
         </div>
       </div>
     </section>

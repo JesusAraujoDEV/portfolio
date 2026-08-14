@@ -1,14 +1,19 @@
-import LocalClock from "@/components/LocalClock";
+"use client";
 
-const links = [
-  { href: "#about", label: "Sobre mí" },
-  { href: "#experience", label: "Experiencia" },
-  { href: "#projects", label: "Proyectos" },
-  { href: "#gustos", label: "Mis gustos" },
-  { href: "#contact", label: "Contacto" },
-];
+import LocalClock from "@/components/LocalClock";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useT } from "@/components/LocaleProvider";
 
 export default function Nav() {
+  const t = useT();
+  const links = [
+    { href: "#about", label: t.nav.about },
+    { href: "#experience", label: t.nav.experience },
+    { href: "#projects", label: t.nav.projects },
+    { href: "#gustos", label: t.nav.gustos },
+    { href: "#contact", label: t.nav.contact },
+  ];
+
   return (
     <header className="fixed top-0 z-50 flex w-full items-center justify-between gap-4 border-b border-foreground/10 bg-background/80 px-4 py-4 backdrop-blur-sm sm:px-6 sm:py-5 md:px-12">
       <a href="#top" className="shrink-0 font-mono text-sm tracking-wider">
@@ -19,14 +24,17 @@ export default function Nav() {
           <a
             key={link.href}
             href={link.href}
-            data-cursor="IR"
+            data-cursor={t.cursor.go}
             className="transition hover:text-foreground"
           >
             {link.label}
           </a>
         ))}
       </nav>
-      <LocalClock />
+      <div className="flex shrink-0 items-center gap-4">
+        <LanguageSwitcher />
+        <LocalClock />
+      </div>
     </header>
   );
 }

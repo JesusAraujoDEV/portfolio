@@ -1,8 +1,13 @@
+"use client";
+
 import Shot from "@/components/Shot";
 import Reveal from "@/components/Reveal";
+import { useLocale, useT } from "@/components/LocaleProvider";
 import type { Project } from "@/lib/projects";
 
 export default function ProjectCase({ project, index }: { project: Project; index: number }) {
+  const { locale } = useLocale();
+  const t = useT();
   const cover = project.images?.[0];
   const gallery = project.images?.slice(1) ?? [];
   const reversed = index % 2 === 1;
@@ -18,8 +23,8 @@ export default function ProjectCase({ project, index }: { project: Project; inde
             <span>{project.year}</span>
           </div>
           <h3 className="mt-3 text-4xl leading-[0.95] tracking-tight md:text-6xl">{project.name}</h3>
-          <p className="mt-3 text-sm text-muted">{project.role}</p>
-          <p className="mt-6 max-w-md text-foreground/80">{project.description}</p>
+          <p className="mt-3 text-sm text-muted">{project.role[locale]}</p>
+          <p className="mt-6 max-w-md text-foreground/80">{project.description[locale]}</p>
           <p className="mt-4 font-mono text-xs uppercase tracking-wider text-accent">{project.stack}</p>
           {project.repos && project.repos.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
@@ -29,10 +34,10 @@ export default function ProjectCase({ project, index }: { project: Project; inde
                   href={repo.url}
                   target="_blank"
                   rel="noreferrer"
-                  data-cursor="VER REPO"
+                  data-cursor={t.cursor.viewRepo}
                   className="font-mono text-xs uppercase tracking-widest text-muted underline decoration-muted/40 underline-offset-4 transition hover:text-accent hover:decoration-accent"
                 >
-                  {repo.label}
+                  {repo.label[locale]}
                 </a>
               ))}
             </div>

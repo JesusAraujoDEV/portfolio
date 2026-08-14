@@ -2,9 +2,9 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-type Active = { src: string; alt: string } | null;
+type Active = { src: string; alt: string; caption?: string } | null;
 
-const LightboxContext = createContext<{ open: (src: string, alt: string) => void } | null>(null);
+const LightboxContext = createContext<{ open: (src: string, alt: string, caption?: string) => void } | null>(null);
 
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const [active, setActive] = useState<Active>(null);
@@ -17,19 +17,27 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
   }, [active]);
 
   return (
-    <LightboxContext.Provider value={{ open: (src, alt) => setActive({ src, alt }) }}>
+    <LightboxContext.Provider value={{ open: (src, alt, caption) => setActive({ src, alt, caption }) }}>
       {children}
       {active && (
         <div
-          className="fixed inset-0 z-[1000] flex items-center justify-center bg-foreground/95 p-6 md:p-16"
+          className="fixed inset-0 z-[1000] flex flex-col items-center justify-center gap-4 bg-foreground/95 p-6 md:p-16"
           onClick={() => setActive(null)}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={active.src}
             alt={active.alt}
-            className="max-h-full max-w-full object-contain shadow-2xl"
+            className="max-h-[75vh] max-w-full object-contain shadow-2xl"
           />
+          {active.caption && (
+            <p
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-xl text-center text-sm text-background/90 md:text-base"
+            >
+              {active.caption}
+            </p>
+          )}
           <button
             type="button"
             aria-label="Cerrar"

@@ -5,6 +5,7 @@ export type Project = {
   description: string;
   stack: string;
   images?: string[];
+  repos?: { label: string; url: string }[];
 };
 
 export const projects: Project[] = [
@@ -16,6 +17,10 @@ export const projects: Project[] = [
       "La empecé porque llevar mis gastos en bolívares y dólares a la vez en una hoja de cálculo era un dolor de cabeza. Junta todas mis cuentas, convierte automáticamente y me dice en qué se me va la plata cada mes — spoiler: gasolina y curso de alemán.",
     stack: "React · Node.js · Chart.js",
     images: ["/images/platica.png", "/images/platica-stats.png", "/images/platica-transactions.png"],
+    repos: [
+      { label: "Frontend →", url: "https://github.com/JesusAraujoDEV/wallets-frontend" },
+      { label: "Backend →", url: "https://github.com/JesusAraujoDEV/wallets-backend" },
+    ],
   },
   {
     year: "2025",
@@ -25,6 +30,20 @@ export const projects: Project[] = [
       "Un proyecto de universidad que se me fue de las manos: junta películas, música, videojuegos y libros en un solo lugar, y le metí IA (Gemini/DeepSeek) para que recomiende algo cuando de verdad no sé qué hacer con mi tiempo.",
     stack: "Node.js · Express · PostgreSQL · Docker",
     images: ["/images/mediart.png", "/images/mediart-profile.png"],
+    repos: [{ label: "Ver repo →", url: "https://github.com/JesusAraujoDEV/mediart" }],
+  },
+  {
+    year: "2025",
+    name: "NexusDoc",
+    role: "Historias clínicas para un consultorio de gineco-obstetricia",
+    description:
+      "Un consultorio real que llevaba años de expedientes en papel. Migré todo eso a un sistema con historias clínicas, agenda de consultas por Ginecología y Obstetricia (con su propio módulo de ultrasonido) y un dashboard con las estadísticas del consultorio. Ahorita tiene casi 8.000 pacientes registradas y la doctora lo usa a diario.",
+    stack: "React · Vite · TanStack Query · Zod · Node.js · Express · PostgreSQL",
+    images: ["/images/nexusdoc.png", "/images/nexusdoc-2.png", "/images/nexusdoc-nuevaconsulta.png"],
+    repos: [
+      { label: "Frontend →", url: "https://github.com/JesusAraujoDEV/nexus-doc" },
+      { label: "Backend →", url: "https://github.com/JesusAraujoDEV/nexus-doc-back" },
+    ],
   },
   {
     year: "2024",
@@ -37,19 +56,25 @@ export const projects: Project[] = [
   },
   {
     year: "2024",
-    name: "FixIt",
-    role: "App de servicios técnicos, Valencia",
+    name: "Jepo",
+    role: "Tesis de grado — Sistema de Navegación Peatonal Asistida",
     description:
-      "Con 3 compañeros más: una app donde pides un servicio técnico y el técnico más cercano te ve en el mapa y te contacta directo. Mi parte fue la coordinación entre solicitudes y técnicos.",
-    stack: "React Native · Postman",
-    images: ["/images/fixit.png", "/images/fixit-2.png"],
+      "Mi tesis, defendida con 19/20. Una app pensada para la seguridad de la familia: detecta caídas o impactos fuertes con el acelerómetro del teléfono (con un modelo entrenado corriendo en el propio celular), da 5 segundos para cancelar un falso positivo, y si no respondes le avisa a tus contactos de emergencia con tu ubicación. También tiene un mapa familiar donde ves el estado de cada miembro en tiempo real.",
+    stack: "Flutter · NestJS · PostgreSQL · TypeORM · TensorFlow Lite",
+    images: [
+      "/images/jepo-modulos.png",
+      "/images/jepo-login.png",
+      "/images/jepo-grafo-familiar.png",
+      "/images/jepo-usuario-edit.png",
+    ],
+    repos: [{ label: "Repo (con César Arizaleta) →", url: "https://github.com/cesardarizaleta/jepo" }],
   },
   {
     year: "2023",
     name: "Deggs",
     role: "1er lugar, concurso de videojuegos UJAP",
     description:
-      "Patos radioactivos escapando de una base militar, o peleando entre ellos en modo versus. Lo hice para el aniversario de la escuela y terminó ganando.",
+      "Patos radioactivos escapando de una base militar, o peleando entre ellos en modo versus. Lo hice para el aniversario de la escuela y terminó ganando (es del 2023, hoy lo haría distinto, pero le tengo cariño).",
     stack: "Unity",
     images: [
       "/images/deggs.png",
@@ -59,5 +84,6 @@ export const projects: Project[] = [
       "/images/deggs-gameplay-4.png",
       "/images/deggs-menu-modo-juego.png",
     ],
+    repos: [{ label: "Ver repo →", url: "https://github.com/JesusAraujoDEV/goofy-game" }],
   },
 ];

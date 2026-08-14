@@ -21,6 +21,22 @@ export default function ProjectCase({ project, index }: { project: Project; inde
           <p className="mt-3 text-sm text-muted">{project.role}</p>
           <p className="mt-6 max-w-md text-foreground/80">{project.description}</p>
           <p className="mt-4 font-mono text-xs uppercase tracking-wider text-accent">{project.stack}</p>
+          {project.repos && project.repos.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+              {project.repos.map((repo) => (
+                <a
+                  key={repo.url}
+                  href={repo.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cursor="VER REPO"
+                  className="font-mono text-xs uppercase tracking-widest text-muted underline decoration-muted/40 underline-offset-4 transition hover:text-accent hover:decoration-accent"
+                >
+                  {repo.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/15 bg-paper">

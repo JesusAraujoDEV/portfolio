@@ -40,7 +40,7 @@ export const fandomItems: FandomItem[] = [
     key: "jojos",
     src: "/images/jojos.png",
     alt: "JoJo's Bizarre Adventure",
-    caption: "Otro de los animes que siempre tengo pendiente re-ver.",
+    caption: "Amo JoJo's y su estética. La parte 4 es mi favorita — Josuke es mi JoJo favorito, y Kira mi villano favorito.",
     rotate: -3,
     top: "0%",
     left: "52%",

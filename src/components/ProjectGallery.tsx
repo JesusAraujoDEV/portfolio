@@ -16,8 +16,9 @@ const TILE_STYLE = [
 
 export default function ProjectGallery({ images, name }: { images: string[]; name: string }) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const drag = useRef<{ startX: number; scrollLeft: number; active: boolean; moved: boolean }>({
+  const drag = useRef<{ startX: number; startY: number; scrollLeft: number; active: boolean; moved: boolean }>({
     startX: 0,
+    startY: 0,
     scrollLeft: 0,
     active: false,
     moved: false,
@@ -27,10 +28,14 @@ export default function ProjectGallery({ images, name }: { images: string[]; nam
 
   const isScrollable = images.length > 3;
 
+  // ponytail: 5px is real click/tap jitter tolerance, not a drag signal —
+  // a tighter x-only threshold was misclassifying ordinary taps as drags.
+  const DRAG_THRESHOLD = 5;
+
   const onPointerDown = (e: React.PointerEvent) => {
     const track = trackRef.current;
     if (!track) return;
-    drag.current = { startX: e.clientX, scrollLeft: track.scrollLeft, active: true, moved: false };
+    drag.current = { startX: e.clientX, startY: e.clientY, scrollLeft: track.scrollLeft, active: true, moved: false };
     track.setPointerCapture(e.pointerId);
   };
 
@@ -38,7 +43,8 @@ export default function ProjectGallery({ images, name }: { images: string[]; nam
     const track = trackRef.current;
     if (!track || !drag.current.active) return;
     const dx = e.clientX - drag.current.startX;
-    if (Math.abs(dx) > 3) drag.current.moved = true;
+    const dy = e.clientY - drag.current.startY;
+    if (Math.hypot(dx, dy) > DRAG_THRESHOLD) drag.current.moved = true;
     track.scrollLeft = drag.current.scrollLeft - dx;
   };
 

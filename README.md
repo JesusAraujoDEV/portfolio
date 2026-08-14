@@ -16,9 +16,32 @@ Destino: [jesusaraujo.lat](https://jesusaraujo.lat)
 
 ## Stack
 
-- [Next.js](https://nextjs.org/) (App Router, TypeScript) + [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/) — transiciones y micro-interacciones
-- [react-three-fiber](https://docs.pmnd.rs/react-three-fiber) — acentos 3D/WebGL
+- [Next.js 16](https://nextjs.org/) (App Router, TypeScript) + [Tailwind CSS v4](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/) — transiciones, scroll choreography y el sistema de drag de la sección "Mis gustos"
+- i18n propio (ES/EN/DE) vía Context, sin librería externa — ver `src/components/LocaleProvider.tsx`
+- Despliegue en [Dokploy](https://dokploy.com/) (auto-deploy on push a `main`)
+
+## Estructura de carpetas
+
+```
+src/
+├── app/
+│   ├── layout.tsx        # Providers globales (locale, lightbox, cursor)
+│   └── page.tsx           # Ensambla las secciones de la página
+├── components/             # Un componente por archivo
+│   ├── Hero.tsx, About.tsx, Experience.tsx, Projects.tsx, Interests.tsx, Footer.tsx
+│   ├── ProjectCase.tsx, ProjectGallery.tsx     # Casos de estudio de proyectos
+│   ├── FandomPile.tsx, FandomMobileItem.tsx     # Pila arrastrable de gustos
+│   ├── CustomCursor.tsx, LightboxProvider.tsx   # Interacciones globales
+│   └── LocaleProvider.tsx, LanguageSwitcher.tsx # Selector de idioma ES/EN/DE
+├── hooks/
+│   └── useActiveSectionHash.ts   # Sincroniza el hash de la URL con la sección visible
+└── lib/
+    ├── projects.ts, experience.ts, fandomItems.ts   # Contenido (localizado ES/EN/DE)
+    └── translations.ts, i18n.ts                      # Diccionario de textos de UI
+
+public/images/    # Fotos, capturas de proyectos y arte de "mis gustos"
+```
 
 ## Desarrollo
 
@@ -28,4 +51,4 @@ npm run dev
 
 ## Estado
 
-En construcción.
+En producción: [jesusaraujo.lat](https://jesusaraujo.lat)

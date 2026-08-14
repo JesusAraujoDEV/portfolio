@@ -3,9 +3,11 @@
 import LocalClock from "@/components/LocalClock";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/LocaleProvider";
+import { useActiveSectionHash } from "@/hooks/useActiveSectionHash";
 
 export default function Nav() {
   const t = useT();
+  useActiveSectionHash();
   const links = [
     { href: "#about", label: t.nav.about },
     { href: "#experience", label: t.nav.experience },

@@ -21,6 +21,10 @@ function subscribe(callback: () => void) {
   };
 }
 function getSnapshot(): Locale {
+  // ponytail: ?lang= wins over localStorage on first read (URL is the more
+  // explicit signal — e.g. a shared link) — falls back to storage, then "es".
+  const urlLang = new URLSearchParams(window.location.search).get("lang");
+  if (isLocale(urlLang)) return urlLang;
   const stored = window.localStorage.getItem(STORAGE_KEY);
   return isLocale(stored) ? stored : "es";
 }
@@ -38,6 +42,9 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const setLocale = (next: Locale) => {
     window.localStorage.setItem(STORAGE_KEY, next);
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", next);
+    window.history.replaceState(null, "", url);
     listeners.forEach((l) => l());
   };
 

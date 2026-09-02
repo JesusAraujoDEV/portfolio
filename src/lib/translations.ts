@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n";
 
 const es = {
-    nav: { about: "Sobre mí", experience: "Experiencia", projects: "Proyectos", gustos: "Mis gustos", contact: "Contacto" },
+    nav: { about: "Sobre mí", experience: "Experiencia", stack: "Stack", projects: "Proyectos", gustos: "Mis gustos", contact: "Contacto" },
     cursor: { go: "IR", view: "VER", viewRepo: "VER REPO", viewLive: "VER SITIO", write: "ESCRIBIR" },
     hero: {
       pitchBefore:
@@ -24,10 +24,20 @@ const es = {
       heading: "Por dónde he pasado.",
       stages: (n: number) => `${n} etapas · 2022—2026`,
     },
+    stack: {
+      eyebrow: "Tecnologías",
+      heading: "Con esto trabajo. Arrástralo.",
+      dragHint: "Toca y arrastra ↓",
+    },
     projects: {
       eyebrow: "Proyectos",
       heading: "Cosas que construí y que siguen funcionando.",
       liveSite: "Ver sitio →",
+      close: "Cerrar",
+      gallery: "Capturas",
+      yearLabel: "Año",
+      roleLabel: "Rol",
+      stackLabel: "Stack",
     },
     interests: {
       eyebrow: "Mis gustos",
@@ -56,7 +66,7 @@ const es = {
 };
 
 const en: typeof es = {
-    nav: { about: "About", experience: "Experience", projects: "Projects", gustos: "Things I like", contact: "Contact" },
+    nav: { about: "About", experience: "Experience", stack: "Stack", projects: "Projects", gustos: "Things I like", contact: "Contact" },
     cursor: { go: "GO", view: "VIEW", viewRepo: "VIEW REPO", viewLive: "VIEW SITE", write: "WRITE" },
     hero: {
       pitchBefore:
@@ -79,10 +89,20 @@ const en: typeof es = {
       heading: "Where I've been.",
       stages: (n: number) => `${n} stages · 2022—2026`,
     },
+    stack: {
+      eyebrow: "Stack",
+      heading: "What I build with. Drag it around.",
+      dragHint: "Tap and drag ↓",
+    },
     projects: {
       eyebrow: "Projects",
       heading: "Things I built that are still running.",
       liveSite: "View site →",
+      close: "Close",
+      gallery: "Screenshots",
+      yearLabel: "Year",
+      roleLabel: "Role",
+      stackLabel: "Stack",
     },
     interests: {
       eyebrow: "Things I like",
@@ -110,7 +130,7 @@ const en: typeof es = {
 };
 
 const de: typeof es = {
-    nav: { about: "Über mich", experience: "Erfahrung", projects: "Projekte", gustos: "Meine Interessen", contact: "Kontakt" },
+    nav: { about: "Über mich", experience: "Erfahrung", stack: "Stack", projects: "Projekte", gustos: "Meine Interessen", contact: "Kontakt" },
     cursor: { go: "LOS", view: "ANSEHEN", viewRepo: "REPO ANSEHEN", viewLive: "SEITE ANSEHEN", write: "SCHREIBEN" },
     hero: {
       pitchBefore:
@@ -133,10 +153,20 @@ const de: typeof es = {
       heading: "Wo ich schon überall war.",
       stages: (n: number) => `${n} Stationen · 2022—2026`,
     },
+    stack: {
+      eyebrow: "Stack",
+      heading: "Damit arbeite ich. Zieh es herum.",
+      dragHint: "Tippen und ziehen ↓",
+    },
     projects: {
       eyebrow: "Projekte",
       heading: "Dinge, die ich gebaut habe und die immer noch laufen.",
       liveSite: "Seite ansehen →",
+      close: "Schließen",
+      gallery: "Screenshots",
+      yearLabel: "Jahr",
+      roleLabel: "Rolle",
+      stackLabel: "Stack",
     },
     interests: {
       eyebrow: "Meine Interessen",

@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import PaperCycler from "@/components/PaperCycler";
 import { useT } from "@/components/LocaleProvider";
 
 const container = {
@@ -33,66 +32,48 @@ export default function Hero() {
       style={{ opacity: heroOpacity, scale: heroScale }}
       className="relative flex min-h-screen flex-col justify-center overflow-x-clip px-6 pt-28 pb-20 will-change-transform md:px-12"
     >
-      <div className="mx-auto grid w-full max-w-6xl gap-12 md:grid-cols-[1fr_auto] md:items-end">
-        <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl">
-          <div className="mb-4 flex flex-wrap items-center gap-4">
-            <p className="overflow-hidden">
-              <motion.span variants={item} className="block font-mono text-xs uppercase tracking-[0.3em] text-muted">
-                Valencia, Venezuela
-              </motion.span>
-            </p>
-          </div>
-          <h1 className="text-[15vw] font-medium leading-[0.9] tracking-tight md:text-[6.5vw]">
-            <span className="block overflow-hidden">
-              <motion.span variants={item} className="block">
-                Jesús
-              </motion.span>
-            </span>
-            <span className="block overflow-hidden">
-              <motion.span variants={item} className="block">
-                Araujo
-              </motion.span>
-            </span>
-          </h1>
-          <p className="mt-8 max-w-md overflow-hidden">
+      <motion.div variants={container} initial="hidden" animate="show" className="mx-auto w-full max-w-6xl">
+        <p className="mb-4 overflow-hidden">
+          <motion.span variants={item} className="block font-mono text-xs uppercase tracking-[0.3em] text-muted">
+            Valencia, Venezuela
+          </motion.span>
+        </p>
+        <h1 className="text-[22vw] font-medium leading-[0.82] tracking-tight md:text-[13vw] lg:text-[12vw]">
+          <span className="block overflow-hidden">
+            <motion.span variants={item} className="block">
+              Jesús
+            </motion.span>
+          </span>
+          <span className="block overflow-hidden">
+            <motion.span variants={item} className="block">
+              Araujo
+            </motion.span>
+          </span>
+        </h1>
+
+        <div className="mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-end md:justify-between md:gap-12">
+          <p className="max-w-md overflow-hidden">
             <motion.span variants={item} className="block text-base text-foreground/80 md:text-lg">
               {t.hero.pitchBefore}
               <span className="text-accent">Intelix Synergy</span>
               {t.hero.pitchAfter}
             </motion.span>
           </p>
-        </motion.div>
 
-        <div className="hidden shrink-0 flex-col items-end gap-10 md:flex">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-56 w-56 lg:h-72 lg:w-72"
-          >
-            <div className="absolute inset-[-20%] -z-10 rounded-full bg-accent/20 blur-3xl" />
-            <PaperCycler className="h-full w-full" />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="flex flex-col items-end gap-6"
-          >
+          <motion.div variants={item} className="flex shrink-0 flex-wrap gap-x-8 gap-y-4 md:flex-col md:items-end md:gap-6">
             {[
               { label: t.hero.rol, value: t.hero.rolValue },
               { label: t.hero.ahoraEn, value: "Intelix Synergy" },
               { label: t.hero.stack, value: t.hero.stackValue },
             ].map((fact) => (
-              <div key={fact.label} className="text-right font-mono text-xs uppercase tracking-widest">
+              <div key={fact.label} className="font-mono text-xs uppercase tracking-widest md:text-right">
                 <span className="block text-muted">{fact.label}</span>
                 <span className="text-foreground">{fact.value}</span>
               </div>
             ))}
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}

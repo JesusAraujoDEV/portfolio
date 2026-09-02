@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const SECTION_IDS = ["about", "experience", "projects", "gustos", "contact"];
+const SECTION_IDS = ["about", "experience", "stack", "projects", "gustos", "contact"];
 
 /**
  * Watches the section elements and keeps the URL hash in sync with whichever

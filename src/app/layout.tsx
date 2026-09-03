@@ -48,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      data-blood="red"
+      data-blood="pink"
       className={`${fontVars} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col overflow-x-hidden">

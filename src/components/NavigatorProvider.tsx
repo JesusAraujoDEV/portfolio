@@ -49,13 +49,29 @@ function emit() {
   listeners.forEach((cb) => cb());
 }
 
+// useSyncExternalStore compara la snapshot por referencia — parsear el JSON
+// de nuevo en cada llamada devolvía un objeto distinto aunque el contenido no
+// hubiera cambiado, y eso disparaba un loop infinito de renders. Se cachea
+// el último raw string junto a su parse para devolver la MISMA referencia
+// mientras localStorage no cambie de verdad.
+let cachedRaw: string | null | undefined;
+let cachedDrawing: Drawing | null = null;
+
 function readStore(): Drawing | null {
+  let raw: string | null;
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Drawing) : null;
+    raw = localStorage.getItem(STORAGE_KEY);
   } catch {
-    return null;
+    raw = null;
   }
+  if (raw === cachedRaw) return cachedDrawing;
+  cachedRaw = raw;
+  try {
+    cachedDrawing = raw ? (JSON.parse(raw) as Drawing) : null;
+  } catch {
+    cachedDrawing = null;
+  }
+  return cachedDrawing;
 }
 
 export function NavigatorProvider({ children }: { children: ReactNode }) {

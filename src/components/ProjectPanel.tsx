@@ -56,7 +56,8 @@ export default function ProjectPanel({
       onDragEnd={handleDragEnd}
       whileDrag={{ scale: 1.03, zIndex: 30, boxShadow: "10px 10px 0 0 var(--foreground)" }}
       transition={{ layout: { type: "spring", stiffness: 400, damping: 32 } }}
-      className="absolute box-border cursor-grab touch-none p-1.5 active:cursor-grabbing md:p-2"
+      data-grab="true"
+      className="absolute box-border touch-none p-1.5 md:p-2"
     >
       <button
         type="button"

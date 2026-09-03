@@ -4,33 +4,40 @@ import {
   createContext,
   useCallback,
   useContext,
+  useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import { useMotionValue, type MotionValue } from "framer-motion";
 
 const STORAGE_KEY = "navigator-drawing";
 
+/** Un trazo = lista de puntos en coordenadas CSS del canvas donde se dibujó. */
+export type Stroke = { x: number; y: number }[];
+/** El navegante guardado: sus trazos vectoriales + el tamaño real del dibujo
+ * (bounding box), para poder re-renderizarlo a su tamaño real y recolorearlo
+ * en vivo (SVG) en vez de un PNG rasterizado a tamaño fijo. */
+export type Drawing = { strokes: Stroke[]; width: number; height: number };
+
 type NavigatorContextValue = {
-  /** dataURL PNG del stickman dibujado, o null si no hay ninguno. */
-  drawing: string | null;
-  /** Guarda un nuevo navegante (persistido en localStorage). */
-  save: (dataUrl: string) => void;
-  /** Borra el navegante actual para volver a dibujar. */
+  drawing: Drawing | null;
+  save: (d: Drawing) => void;
   clear: () => void;
-  /** true una vez hidratado en cliente, para evitar parpadeo. */
   ready: boolean;
+  /** Posición en viewport del navegante flotante mientras se arrastra — la
+   * consumen los textos que se apartan a su paso (ver PushText). */
+  pos: { x: MotionValue<number>; y: MotionValue<number> };
+  dragging: boolean;
+  setDragging: (v: boolean) => void;
 };
 
 const NavigatorContext = createContext<NavigatorContextValue | null>(null);
 
 // --- external store sobre localStorage -----------------------------------
-// useSyncExternalStore es el hook pensado justo para leer de un sistema
-// externo (localStorage) sin caer en el anti-patrón de setState-en-effect.
 const listeners = new Set<() => void>();
 
 function subscribe(cb: () => void) {
   listeners.add(cb);
-  // otras pestañas escribiendo el mismo key también refrescan.
   window.addEventListener("storage", cb);
   return () => {
     listeners.delete(cb);
@@ -42,28 +49,29 @@ function emit() {
   listeners.forEach((cb) => cb());
 }
 
-function readStore(): string | null {
+function readStore(): Drawing | null {
   try {
-    return localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Drawing) : null;
   } catch {
     return null;
   }
 }
 
 export function NavigatorProvider({ children }: { children: ReactNode }) {
-  // getServerSnapshot devuelve null: en SSR/primera hidratación no hay dibujo.
   const drawing = useSyncExternalStore(subscribe, readStore, () => null);
-  // Una vez montado en cliente, el snapshot del servidor deja de usarse; lo
-  // detectamos comparando con el snapshot cliente en un segundo store simple.
   const ready = useSyncExternalStore(
     () => () => {},
     () => true,
     () => false,
   );
+  const x = useMotionValue(-9999);
+  const y = useMotionValue(-9999);
+  const [dragging, setDragging] = useState(false);
 
-  const save = useCallback((dataUrl: string) => {
+  const save = useCallback((d: Drawing) => {
     try {
-      localStorage.setItem(STORAGE_KEY, dataUrl);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
     } catch {
       // cuota/permiso denegado — no bloquea la UI.
     }
@@ -80,7 +88,9 @@ export function NavigatorProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <NavigatorContext.Provider value={{ drawing, save, clear, ready }}>
+    <NavigatorContext.Provider
+      value={{ drawing, save, clear, ready, pos: { x, y }, dragging, setDragging }}
+    >
       {children}
     </NavigatorContext.Provider>
   );

@@ -11,6 +11,10 @@ export default function CustomCursor() {
   const labelX = useTransform(springX, (v) => v + 26);
   const labelY = useTransform(springY, (v) => v - 34);
   const [label, setLabel] = useState<string | null>(null);
+  // Elementos agarrables (data-grab) mutan la forma del dot mismo — círculo
+  // a diamante recto — para que "esto se arrastra" se lea en el cursor sin
+  // depender solo del texto del pill.
+  const [grab, setGrab] = useState(false);
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;
@@ -21,6 +25,7 @@ export default function CustomCursor() {
       y.set(e.clientY - 16);
       const target = (e.target as HTMLElement)?.closest?.("[data-cursor]");
       setLabel(target?.getAttribute("data-cursor") ?? null);
+      setGrab(!!(e.target as HTMLElement)?.closest?.("[data-grab]"));
     };
     window.addEventListener("mousemove", move);
     return () => {
@@ -33,8 +38,10 @@ export default function CustomCursor() {
     <>
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[9999] hidden h-8 w-8 rounded-full bg-white mix-blend-difference md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] hidden h-8 w-8 bg-white mix-blend-difference md:block"
         style={{ x: springX, y: springY }}
+        animate={{ borderRadius: grab ? "20%" : "50%", rotate: grab ? 45 : 0, scale: grab ? 1.25 : 1 }}
+        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       />
       <motion.div
         aria-hidden

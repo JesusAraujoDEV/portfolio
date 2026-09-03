@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { useT } from "@/components/LocaleProvider";
+import PushText from "@/components/PushText";
 import { stackItems } from "@/lib/stackItems";
 import { useStackWall } from "@/hooks/useStackWall";
 
@@ -26,7 +27,7 @@ export default function StackWall() {
       <div className="mx-auto max-w-6xl">
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">{t.stack.eyebrow}</span>
         <h2 className="mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">
-          {t.stack.heading}
+          <PushText>{t.stack.heading}</PushText>
         </h2>
 
         <div
@@ -41,7 +42,8 @@ export default function StackWall() {
               }}
               onPointerDown={grab(i)}
               data-cursor={t.cursor.go}
-              className={`absolute top-0 left-0 flex cursor-grab touch-none flex-col items-center justify-center gap-1 rounded-full border-2 border-foreground/80 bg-background p-2 text-center will-change-transform active:cursor-grabbing ${item.big ? "stack-sticker-big" : "stack-sticker"}`}
+              data-grab="true"
+              className={`group absolute top-0 left-0 flex touch-none flex-col items-center justify-center gap-1 rounded-full border-2 border-foreground/80 bg-background p-2 text-center will-change-transform ${item.big ? "stack-sticker-big" : "stack-sticker"}`}
               style={{ filter: "drop-shadow(4px 4px 0px var(--foreground))" }}
             >
               {item.icon ? (
@@ -54,6 +56,13 @@ export default function StackWall() {
                 />
               ) : (
                 <span className="px-1 font-mono text-[9px] leading-tight font-medium uppercase tracking-tight md:text-[10px]">
+                  {item.label}
+                </span>
+              )}
+              {/* Nombre revelado al pasar el cursor — como los stickers del
+                  stack de César, cada tool "tiene nombre" sin saturar la pared. */}
+              {item.icon && (
+                <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 rounded-sm bg-foreground px-1.5 py-0.5 font-mono text-[9px] whitespace-nowrap text-background opacity-0 transition-opacity duration-150 group-hover:opacity-100">
                   {item.label}
                 </span>
               )}

@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import QuickFacts from "@/components/QuickFacts";
 import NowPlaying from "@/components/NowPlaying";
 import FandomPile from "@/components/FandomPile";
+import PushText from "@/components/PushText";
 import { useT } from "@/components/LocaleProvider";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -40,7 +41,7 @@ export default function Interests() {
               {t.interests.eyebrow}
             </motion.span>
             <motion.h2 variants={line} className="mt-4 max-w-2xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">
-              {t.interests.heading}
+              <PushText>{t.interests.heading}</PushText>
             </motion.h2>
             <motion.p variants={line} className="mt-6 max-w-2xl text-foreground/80">
               {t.interests.introBefore}

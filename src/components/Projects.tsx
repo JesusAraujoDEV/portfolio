@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import ProjectPanel from "@/components/ProjectPanel";
 import ProjectModal from "@/components/ProjectModal";
 import Reveal from "@/components/Reveal";
+import PushText from "@/components/PushText";
 import { useLocale, useT } from "@/components/LocaleProvider";
 import { projects, type Project } from "@/lib/projects";
 import { PROJECT_LAYOUT } from "@/lib/projectLayout";
@@ -46,7 +47,7 @@ export default function Projects() {
       <Reveal>
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">{t.projects.eyebrow}</span>
         <h2 className="mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">
-          {t.projects.heading}
+          <PushText>{t.projects.heading}</PushText>
         </h2>
       </Reveal>
 

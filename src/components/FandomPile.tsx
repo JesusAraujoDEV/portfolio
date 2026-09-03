@@ -108,7 +108,8 @@ export default function FandomPile() {
             onDragStart={startDrag(item)}
             onDragEnd={() => setDraggingKey(null)}
             data-cursor={draggingKey === item.key ? draggingLabel[locale] : dragLabel[locale]}
-            className={`absolute cursor-grab touch-none active:cursor-grabbing ${item.sizeDesktop}`}
+            data-grab="true"
+            className={`absolute touch-none ${item.sizeDesktop}`}
             style={{ top: item.top, left: item.left }}
           >
             <Poster item={item} />

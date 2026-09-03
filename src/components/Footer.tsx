@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import PushText from "@/components/PushText";
 import { useT } from "@/components/LocaleProvider";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -37,7 +38,7 @@ export default function Footer() {
               {t.footer.eyebrow}
             </span>
             <h2 className="mt-4 max-w-lg text-4xl leading-[0.95] tracking-tight break-words md:text-5xl">
-              {t.footer.heading}
+              <PushText>{t.footer.heading}</PushText>
             </h2>
             <a
               href="mailto:jesusaraujodev@gmail.com"

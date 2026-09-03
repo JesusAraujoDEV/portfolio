@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import PushText from "@/components/PushText";
 import { useLocale, useT } from "@/components/LocaleProvider";
 import { experience } from "@/lib/experience";
 
@@ -36,7 +37,7 @@ export default function Experience() {
               {t.experience.eyebrow}
             </span>
             <h2 className="mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">
-              {t.experience.heading}
+              <PushText>{t.experience.heading}</PushText>
             </h2>
           </div>
           <span className="font-mono text-xs uppercase tracking-widest text-muted">

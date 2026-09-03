@@ -74,7 +74,7 @@ export default function Footer() {
         </Reveal>
 
         <p className="mt-16 font-mono text-[11px] text-muted">
-          © {new Date().getFullYear()} Jesús Araujo — Valencia, Venezuela.
+          <PushText>{`© ${new Date().getFullYear()} Jesús Araujo — Valencia, Venezuela.`}</PushText>
         </p>
       </div>
     </footer>

@@ -24,7 +24,7 @@ export const experience: ExperienceItem[] = [
       de: "Anwendungsanalyst",
     },
     org: "Intelix Synergy",
-    where: { es: "Remoto · Costa Rica", en: "Remote · Costa Rica", de: "Remote · Costa Rica" },
+    where: { es: "Híbrido · Proyectos de Costa Rica", en: "Hybrid · Costa Rica projects", de: "Hybrid · Costa-Rica-Projekte" },
     logo: "/images/intelix.jpeg",
     kind: "work",
     summary: {

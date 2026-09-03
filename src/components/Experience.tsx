@@ -12,10 +12,9 @@ export default function Experience() {
   const t = useT();
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
-  // La fila bajo el cursor se abre sola y las demás se atenúan. En carga, la
-  // primera (Intelix) queda abierta hasta que el cursor toque otra. En táctil
-  // (sin hover) el tap alterna la fila abierta.
-  const [active, setActive] = useState<number | null>(0);
+  // Todas las experiencias se muestran expandidas siempre (Jesús lo pidió).
+  // El hover solo resalta la fila enfocada atenuando las demás — no colapsa.
+  const [hovered, setHovered] = useState<number | null>(null);
 
   // La sección deriva hacia arriba y se desvanece al salir por el tope —
   // misma técnica que AboutStage, acotada a esta sección.
@@ -45,16 +44,16 @@ export default function Experience() {
           </span>
         </Reveal>
 
-        <div className="mt-16 border-t-2 border-foreground/25">
+        <div
+          className="mt-16 border-t-2 border-foreground/25"
+          onMouseLeave={() => setHovered(null)}
+        >
           {experience.map((job, i) => (
             <JobRow
               key={job.org}
               job={job}
-              isOpen={active === i}
-              dimmed={active !== null && active !== i}
-              // Hover (desktop): abrir al entrar. Tap (táctil): alternar.
-              onHover={(h) => h && setActive(i)}
-              onToggle={() => setActive((cur) => (cur === i ? null : i))}
+              dimmed={hovered !== null && hovered !== i}
+              onHover={(h) => setHovered(h ? i : null)}
             />
           ))}
         </div>

@@ -34,11 +34,11 @@ function rest(): LetterState {
 export default function WobbleName({ lines }: { lines: string[] }) {
   const reduce = useReducedMotion();
   const [hover, setHover] = useState(false);
-  // En móvil no hay hover — el efecto arranca solo, pero más lento (el tick
-  // de 90ms se siente frenético sin el gesto de "estoy pasando el mouse").
+  // El efecto ahora está SIEMPRE activo (Jesús lo pidió), sin depender del
+  // hover. En móvil late más lento — 90ms sin gesto se siente frenético.
   const isMobile = useSyncExternalStore(subscribeCoarsePointer, getIsCoarsePointer, () => false);
-  const active = hover || isMobile;
-  const tickMs = isMobile ? 220 : 90;
+  const active = !reduce;
+  const tickMs = isMobile ? 200 : 130;
   // Un LetterState por carácter, aplanado por línea.
   const counts = lines.map((l) => l.length);
   const total = counts.reduce((a, b) => a + b, 0);
@@ -94,7 +94,9 @@ export default function WobbleName({ lines }: { lines: string[] }) {
                   fontFamily: s.font,
                   transform: `translate(${s.dx}px, ${s.dy}px) rotate(${s.rot}deg)`,
                   transition: active ? "none" : "transform 220ms cubic-bezier(0.16,1,0.3,1)",
-                  color: active ? "var(--accent)" : undefined,
+                  // La animación es permanente; el rojo se reserva al hover
+                  // para que el nombre no viva siempre en acento.
+                  color: hover ? "var(--accent)" : undefined,
                 }}
               >
                 {ch === " " ? " " : ch}

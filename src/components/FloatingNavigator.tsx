@@ -22,6 +22,20 @@ export default function FloatingNavigator() {
   // recalcula con lo que hay debajo del navegante (drag y scroll lo mueven
   // sin remontar el componente).
   const [overInk, setOverInk] = useState(false);
+  // En táctil no hay hover para el botón ↺: mientras se arrastra aparece una
+  // papelera abajo al centro; soltar el monito encima lo elimina.
+  const [showBin, setShowBin] = useState(false);
+  const [overBin, setOverBin] = useState(false);
+
+  // Zona de la papelera: franja inferior centrada. Se evalúa con la posición
+  // real del puntero (pos), ya en coordenadas de viewport.
+  const pointerOverBin = () => {
+    const x = pos.x.get();
+    const y = pos.y.get();
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    return y > h - 140 && x > w / 2 - 70 && x < w / 2 + 70;
+  };
 
   const sampleBand = () => {
     const r = boxRef.current?.getBoundingClientRect();
@@ -71,9 +85,34 @@ export default function FloatingNavigator() {
     pos.x.set(vx);
     pos.y.set(vy);
     sampleBand();
+    setOverBin(pointerOverBin());
+  };
+
+  const handleDragStart = () => {
+    setDragging(true);
+    setShowBin(true);
+  };
+
+  const handleDragEnd = () => {
+    setDragging(false);
+    setShowBin(false);
+    // Soltar sobre la papelera elimina el navegante.
+    if (pointerOverBin()) clear();
+    setOverBin(false);
   };
 
   return (
+    <>
+    {/* Papelera: aparece mientras se arrastra (clave en táctil, donde no hay
+        hover para el botón ↺). Soltar el monito encima lo borra. */}
+    <div
+      aria-hidden
+      className={`fixed bottom-6 left-1/2 z-[901] flex h-16 w-16 -translate-x-1/2 items-center justify-center border-2 border-foreground text-2xl transition-all duration-200 ${
+        showBin ? "opacity-100 scale-100" : "pointer-events-none opacity-0 scale-75"
+      } ${overBin ? "bg-accent text-background scale-125" : "bg-background text-foreground"}`}
+    >
+      🗑
+    </div>
     <motion.div
       ref={boxRef}
       drag
@@ -81,9 +120,9 @@ export default function FloatingNavigator() {
       dragElastic={0.12}
       dragConstraints={{ left: -window.innerWidth + 120, right: 24, top: -window.innerHeight + 160, bottom: 24 }}
       whileDrag={{ scale: 1.08 }}
-      onDragStart={() => setDragging(true)}
+      onDragStart={handleDragStart}
       onDrag={onDrag}
-      onDragEnd={() => setDragging(false)}
+      onDragEnd={handleDragEnd}
       initial={{ opacity: 0, scale: 0.6 }}
       // Rebote de entrada: además de aparecer, "bota" un par de veces — la
       // misma seña visual de "esto se agarra" que trae el cursor-diamante,
@@ -123,5 +162,6 @@ export default function FloatingNavigator() {
         ↺
       </button>
     </motion.div>
+    </>
   );
 }

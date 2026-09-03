@@ -22,7 +22,9 @@ export default function StickmanCanvas() {
         <h2 className="mt-4 max-w-2xl text-5xl font-bold uppercase leading-[0.9] tracking-[-0.03em] break-words md:text-7xl">
           <PushText>{t.heading}</PushText>
         </h2>
-        <p className="mt-6 max-w-xl text-foreground/80">{t.blurb}</p>
+        <p className="mt-6 max-w-xl text-foreground/80">
+          <PushText>{t.blurb}</PushText>
+        </p>
 
         <div className="mt-10 flex flex-col gap-4">
           <div className="relative w-full max-w-xl">

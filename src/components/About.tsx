@@ -19,13 +19,13 @@ export default function About() {
     </div>
   );
 
-  // Marco: fondo del tono "blood" elegido (cambiar_color.ps1) + líneas negras
-  // — un passe-partout que vuelve intencional el recorte de la foto en vez
-  // de dejar su halo blanco flotando suelto sobre el fondo negro de la banda.
+  // Marco: fondo rosa/rojo con rejilla de puntos negros (.dots) + líneas
+  // negras — un passe-partout con textura que vuelve intencional el recorte
+  // de la foto en vez de dejar su halo blanco suelto sobre la banda negra.
   const photo = (
     <div
-      className="border-4 border-[#0a0a0a] p-3"
-      style={{ background: "var(--blood)", boxShadow: "8px 8px 0 0 #0a0a0a" }}
+      className="dots border-4 border-[#0a0a0a] p-3"
+      style={{ backgroundColor: "var(--blood)", boxShadow: "8px 8px 0 0 #0a0a0a" }}
     >
       {rawPhoto}
     </div>

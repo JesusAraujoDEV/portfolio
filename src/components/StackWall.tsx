@@ -32,7 +32,8 @@ export default function StackWall() {
 
         <div
           ref={containerRef}
-          className="stack-wall relative mt-16 h-[70vh] max-h-[720px] min-h-[420px] w-full touch-none overflow-hidden border border-foreground/15 bg-paper/40"
+          className="stack-wall dots relative mt-16 h-[70vh] max-h-[720px] min-h-[420px] w-full touch-none overflow-hidden border-2 border-foreground"
+          style={{ backgroundColor: "var(--blood)" }}
         >
           {stackItems.map((item, i) => (
             <div
@@ -43,29 +44,21 @@ export default function StackWall() {
               onPointerDown={grab(i)}
               data-cursor={t.cursor.go}
               data-grab="true"
-              className={`group absolute top-0 left-0 flex touch-none flex-col items-center justify-center gap-1 rounded-full border-2 border-foreground/80 bg-background p-2 text-center will-change-transform ${item.big ? "stack-sticker-big" : "stack-sticker"}`}
-              style={{ filter: "drop-shadow(4px 4px 0px var(--foreground))" }}
+              className={`group absolute top-0 left-0 flex touch-none items-center justify-center border-2 border-[#0a0a0a] bg-[#f2f0eb] p-2 text-center will-change-transform ${item.big ? "stack-sticker-big" : "stack-sticker"}`}
+              style={{ boxShadow: "6px 6px 0 0 #0a0a0a" }}
             >
-              {item.icon ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={`https://skillicons.dev/icons?i=${item.icon}`}
-                  alt={item.label}
-                  draggable={false}
-                  className="h-1/2 w-1/2 object-contain"
-                />
-              ) : (
-                <span className="px-1 font-mono text-[9px] leading-tight font-medium uppercase tracking-tight md:text-[10px]">
-                  {item.label}
-                </span>
-              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.img ?? `https://skillicons.dev/icons?i=${item.icon}`}
+                alt={item.label}
+                draggable={false}
+                className="h-3/5 w-3/5 object-contain"
+              />
               {/* Nombre revelado al pasar el cursor — como los stickers del
                   stack de César, cada tool "tiene nombre" sin saturar la pared. */}
-              {item.icon && (
-                <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 rounded-sm bg-foreground px-1.5 py-0.5 font-mono text-[9px] whitespace-nowrap text-background opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-                  {item.label}
-                </span>
-              )}
+              <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 bg-foreground px-1.5 py-0.5 font-mono text-[9px] whitespace-nowrap text-background opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                {item.label}
+              </span>
             </div>
           ))}
         </div>

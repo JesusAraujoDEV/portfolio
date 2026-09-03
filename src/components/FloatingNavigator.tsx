@@ -57,9 +57,19 @@ export default function FloatingNavigator() {
     document.getElementById("navigator")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const onDrag = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    pos.x.set(info.point.x);
-    pos.y.set(info.point.y);
+  // info.point viene en coordenadas de página (incluye scroll). El navegante
+  // es `fixed` (espacio de viewport) y el efecto "push" de los títulos compara
+  // contra getBoundingClientRect (también viewport), así que convertimos
+  // restando el scroll. Sin esto, arrastrar mientras se scrollea desincroniza
+  // la posición reportada y el monito "se iba" de la pantalla.
+  const onDrag = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    // Preferimos la posición real del puntero del evento cuando existe
+    // (viewport-space nativo); si no, caemos al point de página menos scroll.
+    const native = e as PointerEvent;
+    const vx = typeof native.clientX === "number" ? native.clientX : info.point.x - window.scrollX;
+    const vy = typeof native.clientY === "number" ? native.clientY : info.point.y - window.scrollY;
+    pos.x.set(vx);
+    pos.y.set(vy);
     sampleBand();
   };
 
@@ -69,6 +79,7 @@ export default function FloatingNavigator() {
       drag
       dragMomentum={false}
       dragElastic={0.12}
+      dragConstraints={{ left: -window.innerWidth + 120, right: 24, top: -window.innerHeight + 160, bottom: 24 }}
       whileDrag={{ scale: 1.08 }}
       onDragStart={() => setDragging(true)}
       onDrag={onDrag}

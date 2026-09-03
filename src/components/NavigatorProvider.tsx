@@ -1,16 +1,7 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-  useSyncExternalStore,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { useMotionValue, type MotionValue } from "framer-motion";
-
-const STORAGE_KEY = "navigator-drawing";
 
 /** Un trazo = lista de puntos en coordenadas CSS del canvas donde se dibujó. */
 export type Stroke = { x: number; y: number }[];
@@ -33,79 +24,22 @@ type NavigatorContextValue = {
 
 const NavigatorContext = createContext<NavigatorContextValue | null>(null);
 
-// --- external store sobre localStorage -----------------------------------
-const listeners = new Set<() => void>();
-
-function subscribe(cb: () => void) {
-  listeners.add(cb);
-  window.addEventListener("storage", cb);
-  return () => {
-    listeners.delete(cb);
-    window.removeEventListener("storage", cb);
-  };
-}
-
-function emit() {
-  listeners.forEach((cb) => cb());
-}
-
-// useSyncExternalStore compara la snapshot por referencia — parsear el JSON
-// de nuevo en cada llamada devolvía un objeto distinto aunque el contenido no
-// hubiera cambiado, y eso disparaba un loop infinito de renders. Se cachea
-// el último raw string junto a su parse para devolver la MISMA referencia
-// mientras localStorage no cambie de verdad.
-let cachedRaw: string | null | undefined;
-let cachedDrawing: Drawing | null = null;
-
-function readStore(): Drawing | null {
-  let raw: string | null;
-  try {
-    raw = localStorage.getItem(STORAGE_KEY);
-  } catch {
-    raw = null;
-  }
-  if (raw === cachedRaw) return cachedDrawing;
-  cachedRaw = raw;
-  try {
-    cachedDrawing = raw ? (JSON.parse(raw) as Drawing) : null;
-  } catch {
-    cachedDrawing = null;
-  }
-  return cachedDrawing;
-}
-
 export function NavigatorProvider({ children }: { children: ReactNode }) {
-  const drawing = useSyncExternalStore(subscribe, readStore, () => null);
-  const ready = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false,
-  );
+  // El navegante vive SOLO en memoria: al recargar la página desaparece (lo
+  // pidió Jesús). Nada de localStorage — cada sesión empieza sin monito.
+  const [drawing, setDrawing] = useState<Drawing | null>(null);
   const x = useMotionValue(-9999);
   const y = useMotionValue(-9999);
   const [dragging, setDragging] = useState(false);
 
-  const save = useCallback((d: Drawing) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
-    } catch {
-      // cuota/permiso denegado — no bloquea la UI.
-    }
-    emit();
-  }, []);
-
-  const clear = useCallback(() => {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      // no-op
-    }
-    emit();
-  }, []);
+  const save = useCallback((d: Drawing) => setDrawing(d), []);
+  const clear = useCallback(() => setDrawing(null), []);
 
   return (
     <NavigatorContext.Provider
-      value={{ drawing, save, clear, ready, pos: { x, y }, dragging, setDragging }}
+      // ready siempre true: al no depender de localStorage no hay desfase de
+      // hidratación (drawing arranca en null tanto en servidor como cliente).
+      value={{ drawing, save, clear, ready: true, pos: { x, y }, dragging, setDragging }}
     >
       {children}
     </NavigatorContext.Provider>

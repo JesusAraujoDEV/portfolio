@@ -12,7 +12,7 @@ const INK_BUDGET = 6000;
 /** Dibujo a mano alzada del navegante: trazos vectoriales, presupuesto de
  * tinta, guardado recortado al bounding box real. */
 export function useStickmanDraw() {
-  const { save } = useNavigator();
+  const { save, clear: clearFloating } = useNavigator();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawingRef = useRef(false);
   const last = useRef<{ x: number; y: number } | null>(null);
@@ -69,6 +69,8 @@ export function useStickmanDraw() {
     inkUsed.current = 0;
     setHasStrokes(false);
     setLimitHit(false);
+    // Limpiar el lienzo también retira el navegante flotante ya guardado.
+    clearFloating();
   };
 
   const commit = () => {

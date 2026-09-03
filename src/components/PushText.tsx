@@ -75,7 +75,7 @@ export default function PushText({ children, className }: { children: string; cl
                 </span>
               );
             })}
-            {wi < words.length - 1 ? " " : ""}
+            {wi < words.length - 1 ? "\u00A0" : ""}
           </span>
         );
       })}

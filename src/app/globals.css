@@ -175,6 +175,21 @@ html.cursor-none * {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ===== Patrón de puntos negros (sobre bandas rosa/rojo) =====
+   Puntitos negros planos, sin gradiente de color. Se usa como fondo de las
+   bandas "blood" y detrás de la foto de "Sobre mí". */
+.dots {
+  background-image: radial-gradient(#0a0a0a 1.5px, transparent 1.6px);
+  background-size: 18px 18px;
+  background-position: 0 0;
+}
+
+/* Aplicado a las bandas rojas/rosas: mantiene su color plano de fondo y le
+   superpone la rejilla de puntos. */
+.band--blood.dots {
+  background-color: var(--blood);
+}
+
 /* ===== Accesibilidad: reduce el movimiento ===== */
 @media (prefers-reduced-motion: reduce) {
   html {

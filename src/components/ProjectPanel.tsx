@@ -1,7 +1,7 @@
 "use client";
 
 import type { RefObject } from "react";
-import { motion, type PanInfo } from "framer-motion";
+import { motion, useMotionValue, type PanInfo } from "framer-motion";
 import { useLocale, useT } from "@/components/LocaleProvider";
 import type { Project } from "@/lib/projects";
 
@@ -27,17 +27,29 @@ export default function ProjectPanel({
   const { locale } = useLocale();
   const t = useT();
   const cover = project.images?.[0];
+  // Own x/y motion values, passed to `drag` via style below. Combining raw
+  // `drag` with `layout` leaves the drag transform sitting on top of the
+  // freshly-computed layout box unless it's zeroed out right after drop —
+  // otherwise the FLIP animation measures from the wrong spot and any swap
+  // whose vertical offset isn't 0 (i.e. a different row) visibly glitches,
+  // while a same-row swap "works" only because that stale offset happens to
+  // be zero in Y already.
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
   const handleDragEnd = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     // info.point is page-relative (includes scroll), getBoundingClientRect
     // is viewport-relative — same conversion FandomPile uses for its tooltip.
     onDropAt(info.point.x - window.scrollX, info.point.y - window.scrollY);
+    x.set(0);
+    y.set(0);
   };
 
   return (
     <motion.div
       layout
       drag
+      style={{ ...slot, x, y }}
       dragMomentum={false}
       dragElastic={0.1}
       dragConstraints={containerRef}
@@ -45,7 +57,6 @@ export default function ProjectPanel({
       whileDrag={{ scale: 1.03, zIndex: 30, boxShadow: "10px 10px 0 0 var(--foreground)" }}
       transition={{ layout: { type: "spring", stiffness: 400, damping: 32 } }}
       className="absolute box-border cursor-grab touch-none p-1.5 active:cursor-grabbing md:p-2"
-      style={slot}
     >
       <button
         type="button"

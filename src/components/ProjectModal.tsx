@@ -32,7 +32,7 @@ export default function ProjectModal({ project, onClose }: { project: Project | 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 z-[1000] flex items-center justify-center bg-foreground/80 p-4 backdrop-blur-sm md:p-8"
+          className="fixed inset-0 z-[1000] flex items-center justify-center bg-foreground/95 p-4 backdrop-blur-sm md:p-8"
         >
           <motion.div
             role="dialog"

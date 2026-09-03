@@ -22,6 +22,9 @@
   --on-blood: #f2f0eb;
   --blood-muted: #f2f0ebcc;
   --blood-accent: #0a0a0a;
+
+  /* Amarillo marcador para la barra de nombre del stack (hover). */
+  --highlight: #f4c542;
 }
 
 /* Tema rojo (default) */

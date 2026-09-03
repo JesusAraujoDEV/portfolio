@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useT } from "@/components/LocaleProvider";
-import PushText from "@/components/PushText";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const container = {
@@ -42,12 +41,8 @@ export default function QuickFacts() {
             variants={row}
             className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between"
           >
-            <span className="text-lg font-medium">
-              <PushText>{fact.label}</PushText>
-            </span>
-            <span className="text-sm text-muted">
-              <PushText>{fact.note}</PushText>
-            </span>
+            <span className="text-lg font-medium">{fact.label}</span>
+            <span className="text-sm text-muted">{fact.note}</span>
           </motion.li>
         ))}
       </motion.ul>

@@ -15,9 +15,7 @@ export default function AboutCopy() {
       <h2 className="mt-4 max-w-2xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">
         <PushText>{t.about.heading}</PushText>
       </h2>
-      <p className="mt-6 max-w-2xl text-foreground/80">
-        <PushText>{t.about.bio}</PushText>
-      </p>
+      <p className="mt-6 max-w-2xl text-foreground/80">{t.about.bio}</p>
     </Reveal>
   );
 }

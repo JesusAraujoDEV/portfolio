@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale } from "@/components/LocaleProvider";
-import PushText from "@/components/PushText";
 import type { ExperienceItem } from "@/lib/experience";
 
 const studyLabel = { es: "Formación", en: "Studies", de: "Studium" } as const;
@@ -51,9 +50,7 @@ export default function JobRow({
           {job.org}
         </h3>
         <p className="mt-2 font-mono text-xs uppercase tracking-widest text-accent">{job.role[locale]}</p>
-        <p className="mt-3 max-w-2xl text-foreground/80">
-          <PushText>{job.summary[locale]}</PushText>
-        </p>
+        <p className="mt-3 max-w-2xl text-foreground/80">{job.summary[locale]}</p>
 
         <h4 className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
           {whatLabel[locale]}
@@ -64,9 +61,7 @@ export default function JobRow({
               <span aria-hidden className="mt-1 text-accent">
                 ▪
               </span>
-              <span className="max-w-2xl">
-                <PushText>{h[locale]}</PushText>
-              </span>
+              <span className="max-w-2xl">{h[locale]}</span>
             </li>
           ))}
         </ul>

@@ -56,7 +56,7 @@ const es = {
       heading: "¿Tienes algo en mente? Escríbeme.",
     },
     quickFacts: {
-      magallanesNote: "beisbol venezolano, así perdamos siempre",
+      magallanesNote: "beisbol venezolano, mi equipo de siempre y por siempre",
       valenciaNote: "de aquí soy, aquí sigo construyendo",
     },
     langSwitcher: {

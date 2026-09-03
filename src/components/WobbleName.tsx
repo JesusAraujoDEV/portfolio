@@ -38,7 +38,10 @@ export default function WobbleName({ lines }: { lines: string[] }) {
   // hover. En móvil late más lento — 90ms sin gesto se siente frenético.
   const isMobile = useSyncExternalStore(subscribeCoarsePointer, getIsCoarsePointer, () => false);
   const active = !reduce;
-  const tickMs = isMobile ? 200 : 130;
+  // Más lento que antes — el cambio de fuente por letra a 90-130ms se sentía
+  // frenético y, al recalcular texto tan seguido, generaba jank visible en
+  // el resto de la página (menos ticks/seg = menos reflow de texto en total).
+  const tickMs = isMobile ? 340 : 260;
   // Un LetterState por carácter, aplanado por línea.
   const counts = lines.map((l) => l.length);
   const total = counts.reduce((a, b) => a + b, 0);
@@ -79,10 +82,16 @@ export default function WobbleName({ lines }: { lines: string[] }) {
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
       data-cursor="✶"
-      className="font-display cursor-pointer select-none text-[22vw] uppercase leading-[0.82] tracking-tight md:text-[13vw] lg:text-[12vw]"
+      // contain-layout: aísla el layout interno del h1 — el swap de
+      // font-family por letra (cada fuente tiene métricas/anchos distintos)
+      // ya no puede empujar/reflowear nada fuera de este bloque.
+      className="font-display contain-layout cursor-pointer select-none text-[22vw] uppercase leading-[0.82] tracking-tight md:text-[13vw] lg:text-[12vw]"
     >
       {lines.map((line, li) => (
-        <span key={li} className="block overflow-visible whitespace-nowrap">
+        // overflow-hidden (no visible): la altura de línea queda fija por
+        // leading-[0.82] arriba — así una fuente con métricas más altas se
+        // recorta en vez de "abultar" la línea y correr lo de abajo.
+        <span key={li} className="block overflow-hidden whitespace-nowrap">
           {Array.from(line).map((ch, ci) => {
             idx += 1;
             const s = states[idx] ?? rest();

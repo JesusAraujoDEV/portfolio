@@ -25,7 +25,7 @@ export const stackItems: StackItem[] = [
   { label: "Docker", icon: "docker" },
   { label: "Flutter", icon: "flutter" },
   { label: "TensorFlow", icon: "tensorflow" },
-  { label: "TypeORM", icon: "typeorm" },
+  { label: "TypeORM", img: "/images/type_orm.png" },
   { label: "Tailwind", icon: "tailwind" },
   { label: "Vite", icon: "vite" },
   { label: "Python", icon: "py" },

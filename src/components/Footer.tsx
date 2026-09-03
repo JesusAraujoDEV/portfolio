@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import PushText from "@/components/PushText";
 import { useT } from "@/components/LocaleProvider";
+import { socialIcons, type SocialIconKey } from "@/lib/socialIcons";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const navContainer = {
@@ -15,15 +16,13 @@ const navItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } },
 };
 
-const links = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/jesusaraujodev/" },
-  { label: "Letterboxd", href: "https://letterboxd.com/JesuCritico/" },
-  {
-    label: "Spotify",
-    href: "https://open.spotify.com/user/gmcxo67nwrjpi5g9iecw55wiy",
-  },
-  { label: "GitHub", href: "https://github.com/JesusAraujoDEV" },
-  { label: "Email", href: "mailto:jesusaraujodev@gmail.com" },
+const links: { label: string; href: string; icon: SocialIconKey }[] = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jesusaraujodev/", icon: "linkedin" },
+  { label: "Instagram", href: "https://instagram.com/jesulovescereal", icon: "instagram" },
+  { label: "Letterboxd", href: "https://letterboxd.com/JesuCritico/", icon: "letterboxd" },
+  { label: "Spotify", href: "https://open.spotify.com/user/gmcxo67nwrjpi5g9iecw55wiy", icon: "spotify" },
+  { label: "GitHub", href: "https://github.com/JesusAraujoDEV", icon: "github" },
+  { label: "Email", href: "mailto:jesusaraujodev@gmail.com", icon: "gmail" },
 ];
 
 export default function Footer() {
@@ -63,8 +62,11 @@ export default function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className="transition hover:text-foreground"
+                className="flex items-center gap-1.5 transition hover:text-foreground"
               >
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current" aria-hidden>
+                  <path d={socialIcons[link.icon]} />
+                </svg>
                 {link.label}
               </motion.a>
             ))}

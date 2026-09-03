@@ -11,7 +11,9 @@ export function setupDrawCanvas(canvas: HTMLCanvasElement) {
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.lineWidth = 4;
-  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--blood") || "#e01f1f";
+  // Trazo negro fijo mientras se dibuja — el navegante ya guardado es el que
+  // cambia de color según lo que tenga detrás (ver FloatingNavigator).
+  ctx.strokeStyle = "#0a0a0a";
 }
 
 export function pointFromEvent(e: React.PointerEvent<HTMLCanvasElement>) {

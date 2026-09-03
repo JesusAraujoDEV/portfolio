@@ -4,11 +4,11 @@
 // tactile at ~25 bodies.
 export type Body = { x: number; y: number; vx: number; vy: number; r: number; held: boolean };
 
-const GRAVITY = 260;
-const DAMP = 0.992;
-const BOUNCE = 0.55;
-const MOUSE_R = 150;
-const MOUSE_F = 900;
+const GRAVITY = 1400;
+const DAMP = 0.985;
+const BOUNCE = 0.35;
+const MOUSE_R = 170;
+const MOUSE_F = 650;
 const MAX_DT = 1 / 30;
 
 export class Wall {
@@ -70,6 +70,12 @@ export class Wall {
     if (b.y > this.h - b.r) {
       b.y = this.h - b.r;
       b.vy = -Math.abs(b.vy) * BOUNCE;
+    }
+    // Techo — sin esto el repel del mouse podía lanzarlos fuera del cuadro
+    // por arriba, "las paredes" solo frenaban 3 de los 4 lados.
+    if (b.y < b.r) {
+      b.y = b.r;
+      b.vy = Math.abs(b.vy) * BOUNCE;
     }
   }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, type PanInfo } from "framer-motion";
 import { useLocale } from "@/components/LocaleProvider";
 import { useNavigator } from "@/components/NavigatorProvider";
@@ -16,6 +17,34 @@ export default function FloatingNavigator() {
   const { locale } = useLocale();
   const l = label[locale];
   const reduce = useReducedMotion();
+  const boxRef = useRef<HTMLDivElement>(null);
+  // Contraste: negro sobre banda rosa/roja, rosa sobre banda negra — se
+  // recalcula con lo que hay debajo del navegante (drag y scroll lo mueven
+  // sin remontar el componente).
+  const [overInk, setOverInk] = useState(false);
+
+  const sampleBand = () => {
+    const r = boxRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const el = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    setOverInk(!!el?.closest(".band--ink"));
+  };
+
+  useEffect(() => {
+    if (!drawing) return;
+    sampleBand();
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(sampleBand);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!!drawing]);
 
   // `ready` solo pasa a true tras leer localStorage en cliente, así que
   // también sirve como guarda de hidratación (nada se renderiza en SSR).
@@ -31,10 +60,12 @@ export default function FloatingNavigator() {
   const onDrag = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     pos.x.set(info.point.x);
     pos.y.set(info.point.y);
+    sampleBand();
   };
 
   return (
     <motion.div
+      ref={boxRef}
       drag
       dragMomentum={false}
       dragElastic={0.12}
@@ -50,11 +81,12 @@ export default function FloatingNavigator() {
       transition={reduce ? { duration: 0.2 } : { duration: 0.7, times: [0, 0.35, 0.6, 0.8, 1], ease: [0.34, 1.56, 0.64, 1] }}
       data-cursor={l.drag}
       data-grab="true"
-      className="group fixed bottom-8 right-8 z-[900] hidden touch-none md:block"
+      className="group fixed bottom-8 right-8 z-[900] touch-none"
       style={{ width, height }}
     >
-      {/* Vectorial (no PNG): recolorea en vivo con --blood al tono elegido
-          por cambiar_color.ps1, y su tamaño es el del dibujo real (arriba). */}
+      {/* Vectorial (no PNG): tamaño real del dibujo (arriba), y color que
+          cambia según lo que tenga detrás — rosa sobre negro, negro sobre
+          rosa/rojo — para que siempre se lea. */}
       <svg viewBox={`0 0 ${drawing.width} ${drawing.height}`} className="h-full w-full overflow-visible">
         <g style={{ filter: "drop-shadow(3px 3px 0 var(--foreground))" }}>
           {drawing.strokes.map((s, i) => (
@@ -62,7 +94,7 @@ export default function FloatingNavigator() {
               key={i}
               points={s.map((p) => `${p.x},${p.y}`).join(" ")}
               fill="none"
-              stroke="var(--blood)"
+              stroke={overInk ? "var(--blood)" : "#0a0a0a"}
               strokeWidth={4}
               strokeLinecap="round"
               strokeLinejoin="round"

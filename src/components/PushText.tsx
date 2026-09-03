@@ -4,14 +4,20 @@ import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useNavigator } from "@/components/NavigatorProvider";
 
-const RADIUS = 130;
-const STRENGTH = 24;
+const RADIUS = 150;
+const STRENGTH = 28;
 
 /** Envuelve un heading en spans por letra que se apartan del navegante
  * flotante mientras lo arrastras cerca, y vuelven solas a su sitio (CSS
  * transition) al soltarlo o alejarlo. Solo transform, gateado por
  * prefers-reduced-motion, y el loop de posición corre nada más mientras se
- * arrastra — no hay rAF corriendo en reposo. */
+ * arrastra — no hay rAF corriendo en reposo.
+ *
+ * Las letras de cada PALABRA van dentro de un span inline-block sin
+ * envolver (whitespace-nowrap) — si cada letra fuera su propia caja suelta,
+ * el navegador puede meter un salto de línea entre dos letras de la misma
+ * palabra (la vuelve "rompible" al perder su continuidad de texto), que es
+ * justo el bug que partía "recién" y "pasado" a la mitad. */
 export default function PushText({ children, className }: { children: string; className?: string }) {
   const reduce = useReducedMotion();
   const { pos, dragging } = useNavigator();
@@ -48,19 +54,31 @@ export default function PushText({ children, className }: { children: string; cl
 
   if (reduce) return <span className={className}>{children}</span>;
 
+  const words = children.split(" ");
   return (
     <span className={className}>
-      {children.split("").map((ch, i) => (
-        <span
-          key={i}
-          ref={(el) => {
-            letters.current[i] = el;
-          }}
-          className="inline-block whitespace-pre transition-transform duration-300 ease-out"
-        >
-          {ch}
-        </span>
-      ))}
+      {words.map((word, wi) => {
+        const offset = words.slice(0, wi).reduce((n, w) => n + w.length, 0);
+        return (
+          <span key={wi} className="inline-block whitespace-nowrap">
+            {word.split("").map((ch, ci) => {
+              const i = offset + ci;
+              return (
+                <span
+                  key={i}
+                  ref={(el) => {
+                    letters.current[i] = el;
+                  }}
+                  className="inline-block transition-transform duration-300 ease-out"
+                >
+                  {ch}
+                </span>
+              );
+            })}
+            {wi < words.length - 1 ? " " : ""}
+          </span>
+        );
+      })}
     </span>
   );
 }

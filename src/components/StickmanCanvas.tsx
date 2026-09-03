@@ -41,12 +41,13 @@ export default function StickmanCanvas() {
                 {t.hint}
               </span>
             )}
-            {limitHit && (
-              <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-[#0a0a0a] px-2 py-1 text-center font-mono text-[10px] uppercase tracking-widest text-[#f2f0eb]">
-                {t.limit}
-              </span>
-            )}
           </div>
+          {/* Fuera del canvas — un aviso encima tapaba lo ya dibujado ahí abajo. */}
+          {limitHit && (
+            <span className="font-mono text-[10px] uppercase tracking-widest text-[#0a0a0a]">
+              {t.limit}
+            </span>
+          )}
 
           <div className="flex gap-3">
             <button

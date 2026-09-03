@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useT } from "@/components/LocaleProvider";
+import WobbleName from "@/components/WobbleName";
 
 const container = {
   hidden: {},
@@ -30,7 +31,7 @@ export default function Hero() {
       ref={sectionRef}
       id="top"
       style={{ opacity: heroOpacity, scale: heroScale }}
-      className="relative flex min-h-screen flex-col justify-center overflow-x-clip px-6 pt-28 pb-20 will-change-transform md:px-12"
+      className="band--ink relative flex min-h-screen flex-col justify-center overflow-x-clip px-6 pt-28 pb-20 will-change-transform md:px-12"
     >
       <motion.div variants={container} initial="hidden" animate="show" className="mx-auto w-full max-w-6xl">
         <p className="mb-4 overflow-hidden">
@@ -38,18 +39,9 @@ export default function Hero() {
             Valencia, Venezuela
           </motion.span>
         </p>
-        <h1 className="text-[22vw] font-medium leading-[0.82] tracking-tight md:text-[13vw] lg:text-[12vw]">
-          <span className="block overflow-hidden">
-            <motion.span variants={item} className="block">
-              Jesús
-            </motion.span>
-          </span>
-          <span className="block overflow-hidden">
-            <motion.span variants={item} className="block">
-              Araujo
-            </motion.span>
-          </span>
-        </h1>
+        <motion.div variants={item}>
+          <WobbleName lines={["Jesús", "Araujo"]} />
+        </motion.div>
 
         <div className="mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-end md:justify-between md:gap-12">
           <p className="max-w-md overflow-hidden">

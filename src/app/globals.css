@@ -1,11 +1,43 @@
 @import "tailwindcss";
 
+/* ============================================================
+   RUTA B — Brutalismo negro & rojo, secciones alternadas.
+   Colores fijos y planos, cero gradientes. Cada sección lleva
+   .band--ink o .band--blood; esas clases re-definen las
+   variables base (--background/--foreground/--muted/--accent),
+   así que las utilidades text-foreground / text-accent / etc.
+   se re-tiñen solas por banda sin tocar los componentes.
+   ============================================================ */
+
 :root {
-  --background: #f3ede1;
-  --foreground: #201c16;
-  --accent: #c5342b;
-  --muted: #7a7367;
-  --paper: #fbf8f1;
+  /* Default = banda negra (por si algo queda fuera de una banda). */
+  --background: #0a0a0a;
+  --foreground: #f2f0eb;
+  --accent: #e01f1f;
+  --muted: #8a857c;
+  --paper: #0a0a0a;
+
+  /* Tono "blood" conmutable por cambiar_color.ps1 (data-blood en <html>). */
+  --blood: #e01f1f;
+  --on-blood: #f2f0eb;
+  --blood-muted: #f2f0ebcc;
+  --blood-accent: #0a0a0a;
+}
+
+/* Tema rojo (default) */
+:root[data-blood="red"] {
+  --blood: #e01f1f;
+  --on-blood: #f2f0eb;
+  --blood-muted: #f7d9d9cc;
+  --blood-accent: #0a0a0a;
+}
+
+/* Tema rosa (A/B) — sobre rosa claro el texto va casi negro */
+:root[data-blood="pink"] {
+  --blood: #ffe1e1;
+  --on-blood: #180a0a;
+  --blood-muted: #180a0a99;
+  --blood-accent: #e01f1f;
 }
 
 @theme inline {
@@ -16,67 +48,81 @@
   --color-paper: var(--paper);
   --font-sans: var(--font-space-grotesk);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #171410;
-    --foreground: #f3ede1;
-    --accent: #e0554b;
-    --muted: #8f887a;
-    --paper: #221e18;
-  }
+  --font-display: var(--font-anton);
 }
 
 body {
-  background: var(--background);
+  background: #0a0a0a;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* ===== Bandas de color ===== */
+.band--ink {
+  --background: #0a0a0a;
+  --foreground: #f2f0eb;
+  --muted: #8a857c;
+  --accent: var(--blood);
+  --paper: #0a0a0a;
+  background: #0a0a0a;
+  color: var(--foreground);
+}
+
+.band--blood {
+  --background: var(--blood);
+  --foreground: var(--on-blood);
+  --muted: var(--blood-muted);
+  --accent: var(--blood-accent);
+  --paper: var(--blood);
+  background: var(--blood);
+  color: var(--foreground);
+}
+
+/* ===== Tipografía display ===== */
+.font-display {
+  font-family: var(--font-anton), Impact, sans-serif;
+  letter-spacing: -0.01em;
+}
+
 html {
   scroll-behavior: smooth;
-  scrollbar-color: var(--muted) transparent;
+  scrollbar-color: var(--blood) #0a0a0a;
   scrollbar-width: thin;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--muted);
-  border-radius: 9999px;
-  border: 2px solid var(--background);
+  background-color: var(--blood);
+  border-radius: 0;
+  border: 3px solid #0a0a0a;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--accent);
+  background-color: #f2f0eb;
 }
 
 .gallery-track {
-  scrollbar-color: var(--muted) transparent;
+  scrollbar-color: var(--foreground) transparent;
   scrollbar-width: thin;
 }
 
 .gallery-track::-webkit-scrollbar {
-  height: 5px;
+  height: 6px;
 }
 
 .gallery-track::-webkit-scrollbar-thumb {
-  background-color: var(--muted);
-  border-radius: 9999px;
+  background-color: var(--foreground);
+  border-radius: 0;
   border: none;
-}
-
-.gallery-track::-webkit-scrollbar-thumb:hover {
-  background-color: var(--accent);
 }
 
 html.cursor-none,
@@ -86,7 +132,7 @@ html.cursor-none * {
 
 ::selection {
   background: var(--accent);
-  color: var(--paper);
+  color: var(--background);
 }
 
 @keyframes marquee {
@@ -127,4 +173,21 @@ html.cursor-none * {
 
 .grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== Accesibilidad: reduce el movimiento ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

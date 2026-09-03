@@ -27,8 +27,9 @@ export default function JobRow({
   return (
     <div
       onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
-      className={`grid gap-3 border-b-2 border-foreground/25 py-8 transition-[opacity,padding] duration-300 ease-out md:grid-cols-[220px_1fr] md:gap-10 ${
+      onClick={onToggle}
+      data-cursor={job.kind === "study" ? undefined : "VER"}
+      className={`grid cursor-pointer gap-3 border-b-2 border-foreground/25 py-8 transition-[opacity,padding] duration-300 ease-out md:grid-cols-[220px_1fr] md:gap-10 ${
         dimmed ? "opacity-40" : "opacity-100"
       } ${isOpen ? "md:pl-2" : ""}`}
     >
@@ -53,13 +54,7 @@ export default function JobRow({
 
       {/* Columna derecha: empresa (botón), rol, resumen, despliegue. */}
       <div className="min-w-0">
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={isOpen}
-          data-cursor={job.kind === "study" ? undefined : "IR"}
-          className="flex w-full items-center justify-between gap-4 text-left"
-        >
+        <div className="flex items-center justify-between gap-4">
           <h3 className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-tight md:text-4xl">
             {job.org}
           </h3>
@@ -71,7 +66,7 @@ export default function JobRow({
           >
             +
           </span>
-        </button>
+        </div>
         <p className="mt-2 font-mono text-xs uppercase tracking-widest text-accent">{job.role[locale]}</p>
         <p className="mt-3 max-w-2xl text-foreground/80">{job.summary[locale]}</p>
 

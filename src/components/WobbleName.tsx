@@ -38,11 +38,7 @@ export default function WobbleName({ lines }: { lines: string[] }) {
   // hover. En móvil late más lento — 90ms sin gesto se siente frenético.
   const isMobile = useSyncExternalStore(subscribeCoarsePointer, getIsCoarsePointer, () => false);
   const active = !reduce;
-  // Más lento que antes — el cambio de fuente por letra a 90-130ms se sentía
-  // frenético y, al recalcular texto tan seguido, generaba jank visible en
-  // el resto de la página (menos ticks/seg = menos reflow de texto en total).
   const tickMs = isMobile ? 340 : 260;
-  // Un LetterState por carácter, aplanado por línea.
   const counts = lines.map((l) => l.length);
   const total = counts.reduce((a, b) => a + b, 0);
   const [states, setStates] = useState<LetterState[]>(() => Array.from({ length: total }, rest));
@@ -51,8 +47,6 @@ export default function WobbleName({ lines }: { lines: string[] }) {
 
   useEffect(() => {
     if (!active || reduce) return;
-    // Cada letra salta a una fuente aleatoria del set y a una
-    // micro-rotación/desplazamiento. Solo transform + font-family (barato).
     const tick = (now: number) => {
       if (now - last.current > tickMs) {
         last.current = now;
@@ -68,52 +62,55 @@ export default function WobbleName({ lines }: { lines: string[] }) {
       raf.current = requestAnimationFrame(tick);
     };
     raf.current = requestAnimationFrame(tick);
-    // Al soltar el hover, el cleanup detiene el loop y devuelve las letras a
-    // reposo vía updater (no es setState síncrono en el cuerpo del effect).
     return () => {
       cancelAnimationFrame(raf.current);
       setStates((prev) => prev.map(rest));
     };
   }, [active, reduce, total, tickMs]);
 
-  let idx = -1;
   return (
     <h1
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
       data-cursor="✶"
-      // contain-layout: aísla el layout interno del h1 — el swap de
-      // font-family por letra (cada fuente tiene métricas/anchos distintos)
-      // ya no puede empujar/reflowear nada fuera de este bloque.
-      className="font-display contain-layout cursor-pointer select-none text-[22vw] uppercase leading-[0.82] tracking-tight md:text-[13vw] lg:text-[12vw]"
+      className="font-display cursor-pointer select-none text-[22vw] uppercase leading-[0.82] tracking-tight md:text-[13vw] lg:text-[12vw]"
     >
-      {lines.map((line, li) => (
-        // overflow-hidden (no visible): la altura de línea queda fija por
-        // leading-[0.82] arriba — así una fuente con métricas más altas se
-        // recorta en vez de "abultar" la línea y correr lo de abajo.
-        <span key={li} className="block overflow-hidden whitespace-nowrap">
-          {Array.from(line).map((ch, ci) => {
-            idx += 1;
-            const s = states[idx] ?? rest();
-            return (
-              <span
-                key={ci}
-                className="inline-block will-change-transform"
-                style={{
-                  fontFamily: s.font,
-                  transform: `translate(${s.dx}px, ${s.dy}px) rotate(${s.rot}deg)`,
-                  transition: active ? "none" : "transform 220ms cubic-bezier(0.16,1,0.3,1)",
-                  // La animación es permanente; el rojo se reserva al hover
-                  // para que el nombre no viva siempre en acento.
-                  color: hover ? "var(--accent)" : undefined,
-                }}
-              >
-                {ch === " " ? " " : ch}
-              </span>
-            );
-          })}
-        </span>
-      ))}
+      {lines.map((line, li) => {
+        const offset = lines.slice(0, li).reduce((n, l) => n + l.length, 0);
+        return (
+          <span key={li} className="relative block whitespace-nowrap">
+            {/* Placeholder REAL (accesible, opacity-0): fija el tamaño de la
+                línea en la fuente base, sin transform — el resto de la
+                página se mide contra ESTA caja, que nunca cambia de tamaño. */}
+            <span className="opacity-0">{line}</span>
+            {/* Capa decorativa animada, absolutamente posicionada encima:
+                al quedar fuera del flujo, nada de lo que haga (cambiar de
+                fuente, trasladarse, rotar) puede empujar el resto de la
+                página — es justo lo que pedía Jesús: "tamaño fijo". */}
+            <span aria-hidden="true" className="absolute inset-0 flex">
+              {Array.from(line).map((ch, ci) => {
+                const s = states[offset + ci] ?? rest();
+                return (
+                  <span
+                    key={ci}
+                    className="inline-block will-change-transform"
+                    style={{
+                      fontFamily: s.font,
+                      transform: `translate(${s.dx}px, ${s.dy}px) rotate(${s.rot}deg)`,
+                      transition: active ? "none" : "transform 220ms cubic-bezier(0.16,1,0.3,1)",
+                      // La animación es permanente; el rojo se reserva al hover
+                      // para que el nombre no viva siempre en acento.
+                      color: hover ? "var(--accent)" : undefined,
+                    }}
+                  >
+                    {ch === " " ? " " : ch}
+                  </span>
+                );
+              })}
+            </span>
+          </span>
+        );
+      })}
     </h1>
   );
 }

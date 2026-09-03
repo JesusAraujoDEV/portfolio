@@ -22,7 +22,7 @@ export default function StackWall() {
   };
 
   return (
-    <section id="stack" className="overflow-x-clip px-6 py-28 md:px-12 md:py-40">
+    <section id="stack" className="band--ink overflow-x-clip px-6 py-28 md:px-12 md:py-40">
       <div className="mx-auto max-w-6xl">
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">{t.stack.eyebrow}</span>
         <h2 className="mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">

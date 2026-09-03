@@ -29,7 +29,7 @@ export default function Footer() {
   const t = useT();
 
   return (
-    <footer id="contact" className="border-t border-foreground/10 px-6 py-16 md:px-12">
+    <footer id="contact" className="band--blood border-t-4 border-foreground px-6 py-16 md:px-12">
       <div className="mx-auto max-w-6xl">
         <Reveal className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div>

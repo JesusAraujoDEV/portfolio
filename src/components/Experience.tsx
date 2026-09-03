@@ -27,7 +27,7 @@ export default function Experience() {
       ref={sectionRef}
       id="experience"
       style={{ y: exitY, opacity: exitOpacity }}
-      className="overflow-x-clip px-6 py-28 will-change-transform md:px-12 md:py-40"
+      className="band--blood overflow-x-clip px-6 py-28 will-change-transform md:px-12 md:py-40"
     >
       <div className="mx-auto max-w-6xl">
         <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">

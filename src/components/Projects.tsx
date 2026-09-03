@@ -42,7 +42,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="px-6 py-28 md:px-12 md:py-40">
+    <section id="projects" className="band--blood px-6 py-28 md:px-12 md:py-40">
       <Reveal>
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">{t.projects.eyebrow}</span>
         <h2 className="mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight break-words md:text-6xl">

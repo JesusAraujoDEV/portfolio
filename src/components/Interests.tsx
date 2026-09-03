@@ -25,7 +25,7 @@ export default function Interests() {
   const introY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
-    <section id="gustos" className="overflow-x-clip px-6 py-28 md:px-12 md:py-40">
+    <section id="gustos" className="band--ink overflow-x-clip px-6 py-28 md:px-12 md:py-40">
       <div className="mx-auto max-w-6xl">
         <div ref={introRef}>
           <motion.div

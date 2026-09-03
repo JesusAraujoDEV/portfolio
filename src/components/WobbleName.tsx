@@ -31,10 +31,7 @@ export default function WobbleName({ lines }: { lines: string[] }) {
   const last = useRef(0);
 
   useEffect(() => {
-    if (!hover || reduce) {
-      setStates(Array.from({ length: total }, rest));
-      return;
-    }
+    if (!hover || reduce) return;
     // ~90ms por tick: cada letra salta a una fuente aleatoria del set y a una
     // micro-rotación/desplazamiento. Solo transform + font-family (barato).
     const tick = (now: number) => {
@@ -52,7 +49,12 @@ export default function WobbleName({ lines }: { lines: string[] }) {
       raf.current = requestAnimationFrame(tick);
     };
     raf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf.current);
+    // Al soltar el hover, el cleanup detiene el loop y devuelve las letras a
+    // reposo vía updater (no es setState síncrono en el cuerpo del effect).
+    return () => {
+      cancelAnimationFrame(raf.current);
+      setStates((prev) => prev.map(rest));
+    };
   }, [hover, reduce, total]);
 
   let idx = -1;

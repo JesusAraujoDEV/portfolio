@@ -20,7 +20,7 @@ export default function About() {
   );
 
   return (
-    <section id="about" className="overflow-x-clip px-6 py-28 md:px-12 md:py-40">
+    <section id="about" className="band--ink overflow-x-clip px-6 py-28 md:px-12 md:py-40">
       <div className="mx-auto max-w-6xl">
         <AboutStage photo={photo} copy={<AboutCopy />} />
       </div>

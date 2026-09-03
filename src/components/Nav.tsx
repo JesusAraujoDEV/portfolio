@@ -18,7 +18,7 @@ export default function Nav() {
   ];
 
   return (
-    <header className="fixed top-0 z-50 flex w-full items-center justify-between gap-4 border-b border-foreground/10 bg-background/80 px-4 py-4 backdrop-blur-sm sm:px-6 sm:py-5 md:px-12">
+    <header className="band--ink fixed top-0 z-50 flex w-full items-center justify-between gap-4 border-b-2 border-foreground bg-[#0a0a0a]/90 px-4 py-4 backdrop-blur-sm sm:px-6 sm:py-5 md:px-12">
       <a href="#top" className="shrink-0 font-mono text-sm tracking-wider">
         JA<span className="text-accent">.</span>
       </a>
